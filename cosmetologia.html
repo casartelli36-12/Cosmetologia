@@ -3,641 +3,257 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Consultorio Cosmetología</title>
+<title>Consultorio Cosmetologia</title>
 <style>
   :root {
-    --rose: #C97B84;
-    --rose-light: #E8B4BA;
-    --rose-pale: #F7E8EA;
-    --rose-deep: #9A4F58;
-    --cream: #FDF6F0;
-    --warm-white: #FFFBF8;
-    --sage: #8A9E8C;
-    --sage-light: #C8D9C9;
-    --charcoal: #2D2A2A;
-    --mid: #6B6060;
-    --border: #EAD8D8;
-    --gold: #C4975A;
-    --success: #6A9E78;
-    --danger: #C97B7B;
-    --shadow: 0 2px 12px rgba(180,100,110,0.10);
-    --shadow-md: 0 4px 24px rgba(180,100,110,0.14);
+    --rose:#C97B84;--rose-light:#E8B4BA;--rose-pale:#F7E8EA;--rose-deep:#9A4F58;
+    --cream:#FDF6F0;--warm-white:#FFFBF8;--sage:#8A9E8C;--sage-light:#C8D9C9;
+    --charcoal:#2D2A2A;--mid:#6B6060;--border:#EAD8D8;--gold:#C4975A;
+    --success:#6A9E78;--danger:#C97B7B;
+    --shadow:0 2px 12px rgba(180,100,110,0.10);--shadow-md:0 4px 24px rgba(180,100,110,0.14);
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: var(--cream);
-    color: var(--charcoal);
-    min-height: 100vh;
-  }
-
-  /* ── SIDEBAR ── */
-  #sidebar {
-    position: fixed; left: 0; top: 0; bottom: 0; width: 220px;
-    background: var(--warm-white);
-    border-right: 1px solid var(--border);
-    display: flex; flex-direction: column;
-    z-index: 100;
-  }
-
-  .sidebar-logo {
-    padding: 24px 20px 18px;
-    border-bottom: 1px solid var(--border);
-  }
-  .sidebar-logo .logo-icon {
-    font-size: 22px; margin-bottom: 4px;
-  }
-  .sidebar-logo h1 {
-    font-size: 13px; font-weight: 700; letter-spacing: .04em;
-    color: var(--rose-deep); text-transform: uppercase;
-  }
-  .sidebar-logo p {
-    font-size: 11px; color: var(--mid); margin-top: 2px;
-  }
-
-  nav { flex: 1; padding: 12px 0; }
-  nav a {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 20px; font-size: 13.5px; font-weight: 500;
-    color: var(--mid); text-decoration: none; cursor: pointer;
-    border-left: 3px solid transparent;
-    transition: all .15s;
-  }
-  nav a:hover { background: var(--rose-pale); color: var(--rose-deep); }
-  nav a.active {
-    background: var(--rose-pale); color: var(--rose-deep);
-    border-left-color: var(--rose);
-  }
-  nav a .nav-icon { font-size: 16px; width: 20px; text-align: center; }
-
-  .sidebar-footer {
-    padding: 14px 20px;
-    border-top: 1px solid var(--border);
-    font-size: 11px; color: var(--mid);
-  }
-
-  /* ── MAIN ── */
-  #main {
-    margin-left: 220px;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-  }
-
-  header {
-    background: var(--warm-white);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 32px;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 50;
-  }
-
-  header h2 { font-size: 18px; font-weight: 600; color: var(--charcoal); }
-  header .subtitle { font-size: 12px; color: var(--mid); margin-top: 2px; }
-
-  .header-actions { display: flex; gap: 10px; align-items: center; }
-
-  /* ── BUTTONS ── */
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
-    border: none; cursor: pointer; transition: all .15s; text-decoration: none;
-  }
-  .btn-primary { background: var(--rose); color: #fff; }
-  .btn-primary:hover { background: var(--rose-deep); }
-  .btn-secondary { background: var(--rose-pale); color: var(--rose-deep); }
-  .btn-secondary:hover { background: var(--rose-light); }
-  .btn-ghost { background: transparent; color: var(--mid); border: 1px solid var(--border); }
-  .btn-ghost:hover { background: var(--rose-pale); color: var(--rose-deep); border-color: var(--rose-light); }
-  .btn-danger { background: #fbeaea; color: var(--danger); }
-  .btn-danger:hover { background: var(--danger); color: #fff; }
-  .btn-sm { padding: 5px 10px; font-size: 12px; }
-  .btn-success { background: #eaf4ec; color: var(--success); }
-  .btn-success:hover { background: var(--success); color: #fff; }
-
-  /* ── CONTENT ── */
-  .content { padding: 28px 32px; flex: 1; }
-
-  /* ── VIEWS ── */
-  .view { display: none; }
-  .view.active { display: block; }
-
-  /* ── CARDS ── */
-  .card {
-    background: var(--warm-white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-  }
-
-  .card-title {
-    font-size: 14px; font-weight: 600; color: var(--charcoal);
-    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
-  }
-
-  /* ── STATS ROW ── */
-  .stats-row {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .stat-card {
-    background: var(--warm-white);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-    display: flex; flex-direction: column; gap: 4px;
-  }
-  .stat-label { font-size: 11px; color: var(--mid); text-transform: uppercase; letter-spacing: .06em; }
-  .stat-value { font-size: 28px; font-weight: 700; color: var(--rose-deep); }
-  .stat-sub { font-size: 12px; color: var(--sage); }
-
-  /* ── SEARCH ── */
-  .search-bar {
-    display: flex; gap: 10px; margin-bottom: 20px; align-items: center;
-  }
-  .search-bar input {
-    flex: 1; padding: 9px 14px; border: 1px solid var(--border);
-    border-radius: 8px; font-size: 13px; background: var(--warm-white);
-    color: var(--charcoal); outline: none;
-  }
-  .search-bar input:focus { border-color: var(--rose-light); box-shadow: 0 0 0 3px rgba(201,123,132,.1); }
-
-  /* ── CLIENT TABLE ── */
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    text-align: left; padding: 10px 14px;
-    font-size: 11px; font-weight: 600; color: var(--mid);
-    text-transform: uppercase; letter-spacing: .06em;
-    border-bottom: 2px solid var(--border);
-    background: var(--cream);
-  }
-  td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--rose-pale); cursor: pointer; }
-
-  .badge {
-    display: inline-block; padding: 3px 8px; border-radius: 20px;
-    font-size: 11px; font-weight: 600;
-  }
-  .badge-seca { background: #FEF3C7; color: #92400E; }
-  .badge-mixta { background: #E0F2FE; color: #0369A1; }
-  .badge-grasa { background: #D1FAE5; color: #065F46; }
-  .badge-sensible { background: #FCE7F3; color: #9D174D; }
-  .badge-normal { background: var(--rose-pale); color: var(--rose-deep); }
-
-  /* ── MODAL ── */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.35); z-index: 1000;
-    align-items: center; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: var(--warm-white);
-    border-radius: 16px;
-    box-shadow: var(--shadow-md);
-    width: 620px; max-width: 95vw;
-    max-height: 90vh; overflow-y: auto;
-  }
-
-  .modal-lg { width: 820px; }
-
-  .modal-header {
-    padding: 20px 24px 16px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; background: var(--warm-white); z-index: 2;
-  }
-  .modal-header h3 { font-size: 16px; font-weight: 600; }
-  .modal-close {
-    background: none; border: none; font-size: 20px;
-    color: var(--mid); cursor: pointer; padding: 2px 6px; border-radius: 6px;
-  }
-  .modal-close:hover { background: var(--rose-pale); color: var(--rose-deep); }
-
-  .modal-body { padding: 20px 24px; }
-  .modal-footer {
-    padding: 16px 24px;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: flex-end; gap: 10px;
-    position: sticky; bottom: 0; background: var(--warm-white);
-  }
-
-  /* ── FORM ── */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-  .form-full { grid-column: 1 / -1; }
-
-  .form-group { display: flex; flex-direction: column; gap: 5px; }
-  .form-group label {
-    font-size: 12px; font-weight: 600; color: var(--mid);
-    text-transform: uppercase; letter-spacing: .05em;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    padding: 9px 12px; border: 1px solid var(--border);
-    border-radius: 8px; font-size: 13px;
-    background: var(--cream); color: var(--charcoal); outline: none;
-    font-family: inherit;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--rose-light);
-    box-shadow: 0 0 0 3px rgba(201,123,132,.1);
-    background: var(--warm-white);
-  }
-  .form-group textarea { resize: vertical; min-height: 80px; }
-  .form-section {
-    margin-bottom: 20px;
-  }
-  .form-section-title {
-    font-size: 12px; font-weight: 700; color: var(--rose-deep);
-    text-transform: uppercase; letter-spacing: .08em;
-    margin-bottom: 12px; padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 6px;
-  }
-
-  /* ── CLIENT DETAIL ── */
-  .detail-header {
-    display: flex; gap: 20px; align-items: flex-start;
-    margin-bottom: 24px;
-  }
-  .detail-avatar {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--rose-light), var(--rose));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; font-weight: 700; color: #fff;
-    flex-shrink: 0;
-  }
-  .detail-info h2 { font-size: 20px; font-weight: 700; color: var(--charcoal); }
-  .detail-meta { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
-  .detail-meta span {
-    font-size: 12px; color: var(--mid);
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  .detail-tabs {
-    display: flex; gap: 0; border-bottom: 2px solid var(--border);
-    margin-bottom: 20px;
-  }
-  .detail-tab {
-    padding: 10px 18px; font-size: 13px; font-weight: 500;
-    color: var(--mid); cursor: pointer; border-bottom: 2px solid transparent;
-    margin-bottom: -2px; transition: all .15s;
-  }
-  .detail-tab:hover { color: var(--rose-deep); }
-  .detail-tab.active { color: var(--rose-deep); border-bottom-color: var(--rose); }
-
-  .detail-panel { display: none; }
-  .detail-panel.active { display: block; }
-
-  .info-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-    margin-bottom: 20px;
-  }
-  .info-item label {
-    font-size: 11px; font-weight: 600; color: var(--mid);
-    text-transform: uppercase; letter-spacing: .06em; display: block; margin-bottom: 3px;
-  }
-  .info-item span { font-size: 13.5px; color: var(--charcoal); }
-
-  /* ── SESSIONS ── */
-  .session-card {
-    background: var(--cream);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-  .session-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  .session-date {
-    font-size: 13px; font-weight: 600; color: var(--rose-deep);
-  }
-  .session-treatment {
-    font-size: 14px; font-weight: 600; color: var(--charcoal); margin-bottom: 4px;
-  }
-  .session-field {
-    display: flex; gap: 6px; margin-top: 6px;
-  }
-  .session-field label {
-    font-size: 11px; font-weight: 600; color: var(--mid);
-    text-transform: uppercase; letter-spacing: .05em; min-width: 90px;
-  }
-  .session-field span { font-size: 12.5px; color: var(--charcoal); }
-
-  /* ── AGENDA ── */
-  .agenda-controls {
-    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
-  }
-  .agenda-controls h3 { font-size: 16px; font-weight: 600; flex: 1; text-align: center; }
-
-  .week-grid {
-    display: grid; grid-template-columns: 60px repeat(7, 1fr);
-    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
-    background: var(--warm-white);
-  }
-  .week-header {
-    background: var(--rose-pale); padding: 10px 6px; text-align: center;
-    font-size: 12px; font-weight: 600; color: var(--rose-deep);
-    border-bottom: 2px solid var(--border);
-  }
-  .week-header.time-col { background: var(--cream); color: var(--mid); }
-  .week-header.today { background: var(--rose); color: #fff; }
-
-  .time-slot {
-    border-bottom: 1px solid var(--border);
-    min-height: 48px; position: relative;
-  }
-  .time-label {
-    font-size: 10px; color: var(--mid); text-align: right;
-    padding: 4px 8px 0 0; border-bottom: 1px solid var(--border);
-    min-height: 48px; display: flex; align-items: flex-start; justify-content: flex-end;
-    padding-top: 4px;
-  }
-  .appt-block {
-    position: absolute; inset: 2px; border-radius: 6px;
-    background: var(--rose); color: #fff;
-    font-size: 11px; padding: 4px 6px; cursor: pointer;
-    overflow: hidden;
-  }
-  .appt-block .appt-time { font-weight: 600; }
-  .appt-block .appt-name { opacity: .9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-  /* ── PAYMENTS ── */
-  .payment-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
-  .payment-row input, .payment-row select {
-    padding: 8px 12px; border: 1px solid var(--border);
-    border-radius: 8px; font-size: 13px; background: var(--cream);
-    color: var(--charcoal); outline: none; font-family: inherit;
-  }
-  .payment-row input:focus, .payment-row select:focus {
-    border-color: var(--rose-light);
-    box-shadow: 0 0 0 3px rgba(201,123,132,.1);
-  }
-
-  .payment-badge-paid { background: #d1fae5; color: #065f46; }
-  .payment-badge-pending { background: #FEF3C7; color: #92400E; }
-  .payment-badge-partial { background: #E0F2FE; color: #0369A1; }
-
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    text-align: center; padding: 48px 20px; color: var(--mid);
-  }
-  .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
-  .empty-state p { font-size: 14px; margin-bottom: 16px; }
-
-  /* ── ALERTS ── */
-  .alert {
-    padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;
-  }
-  .alert-info { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
-  .alert-warn { background: #FFFBEB; color: #92400E; border: 1px solid #FDE68A; }
-
-  /* ── FIREBASE CONFIG ── */
-  .config-section {
-    max-width: 500px; margin: 60px auto; text-align: center;
-  }
-  .config-section .logo { font-size: 48px; margin-bottom: 16px; }
-  .config-section h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--rose-deep); }
-  .config-section p { font-size: 14px; color: var(--mid); margin-bottom: 28px; }
-  .config-section .card { text-align: left; }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--rose-light); border-radius: 3px; }
-
-  /* ── TOAST ── */
-  #toast {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--charcoal); color: #fff;
-    padding: 12px 20px; border-radius: 10px;
-    font-size: 13px; z-index: 9999;
-    transform: translateY(80px); opacity: 0;
-    transition: all .3s; pointer-events: none;
-  }
-  #toast.show { transform: translateY(0); opacity: 1; }
-
-  /* ── PRODUCTS LIST ── */
-  .product-tag {
-    display: inline-block; padding: 3px 10px; border-radius: 20px;
-    background: var(--sage-light); color: var(--sage);
-    font-size: 11px; font-weight: 500; margin: 2px;
-  }
-
-  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
+  #sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--warm-white);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;}
+  .sidebar-logo{padding:24px 20px 18px;border-bottom:1px solid var(--border);}
+  .sidebar-logo .logo-icon{font-size:22px;margin-bottom:4px;}
+  .sidebar-logo h1{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--rose-deep);text-transform:uppercase;}
+  .sidebar-logo p{font-size:11px;color:var(--mid);margin-top:2px;}
+  nav{flex:1;padding:12px 0;}
+  nav a{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13.5px;font-weight:500;color:var(--mid);text-decoration:none;cursor:pointer;border-left:3px solid transparent;transition:all .15s;}
+  nav a:hover{background:var(--rose-pale);color:var(--rose-deep);}
+  nav a.active{background:var(--rose-pale);color:var(--rose-deep);border-left-color:var(--rose);}
+  nav a .nav-icon{font-size:16px;width:20px;text-align:center;}
+  .sidebar-footer{padding:14px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--mid);}
+  #main{margin-left:220px;min-height:100vh;display:flex;flex-direction:column;}
+  header{background:var(--warm-white);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+  header h2{font-size:18px;font-weight:600;}
+  .subtitle{font-size:12px;color:var(--mid);margin-top:2px;}
+  .header-actions{display:flex;gap:10px;align-items:center;}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;border:none;cursor:pointer;transition:all .15s;}
+  .btn-primary{background:var(--rose);color:#fff;}.btn-primary:hover{background:var(--rose-deep);}
+  .btn-secondary{background:var(--rose-pale);color:var(--rose-deep);}.btn-secondary:hover{background:var(--rose-light);}
+  .btn-ghost{background:transparent;color:var(--mid);border:1px solid var(--border);}.btn-ghost:hover{background:var(--rose-pale);color:var(--rose-deep);}
+  .btn-sm{padding:5px 10px;font-size:12px;}
+  .content{padding:28px 32px;flex:1;}
+  .view{display:none;}.view.active{display:block;}
+  .card{background:var(--warm-white);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);}
+  .card-title{font-size:14px;font-weight:600;color:var(--charcoal);margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+  .stat-card{background:var(--warm-white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:4px;}
+  .stat-label{font-size:11px;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;}
+  .stat-value{font-size:28px;font-weight:700;color:var(--rose-deep);}
+  .stat-sub{font-size:12px;color:var(--sage);}
+  .search-bar{display:flex;gap:10px;margin-bottom:20px;align-items:center;}
+  .search-bar input{flex:1;padding:9px 14px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--warm-white);outline:none;}
+  .search-bar input:focus{border-color:var(--rose-light);box-shadow:0 0 0 3px rgba(201,123,132,.1);}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{text-align:left;padding:10px 14px;font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--border);background:var(--cream);}
+  td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--rose-pale);cursor:pointer;}
+  .badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;}
+  .badge-seca{background:#FEF3C7;color:#92400E;}.badge-mixta{background:#E0F2FE;color:#0369A1;}
+  .badge-grasa{background:#D1FAE5;color:#065F46;}.badge-sensible{background:#FCE7F3;color:#9D174D;}
+  .badge-normal{background:var(--rose-pale);color:var(--rose-deep);}
+  .payment-badge-pagado{background:#d1fae5;color:#065f46;}
+  .payment-badge-pendiente{background:#FEF3C7;color:#92400E;}
+  .payment-badge-parcial{background:#E0F2FE;color:#0369A1;}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1000;align-items:center;justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--warm-white);border-radius:16px;box-shadow:var(--shadow-md);width:700px;max-width:95vw;max-height:90vh;overflow-y:auto;}
+  .modal-lg{width:860px;}
+  .modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--warm-white);z-index:2;}
+  .modal-header h3{font-size:16px;font-weight:600;}
+  .modal-close{background:none;border:none;font-size:20px;color:var(--mid);cursor:pointer;padding:2px 6px;border-radius:6px;}
+  .modal-close:hover{background:var(--rose-pale);color:var(--rose-deep);}
+  .modal-body{padding:20px 24px;}
+  .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;background:var(--warm-white);}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .form-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+  .form-full{grid-column:1/-1;}
+  .form-group{display:flex;flex-direction:column;gap:5px;}
+  .form-group label{font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;}
+  .form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--cream);color:var(--charcoal);outline:none;font-family:inherit;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--rose-light);box-shadow:0 0 0 3px rgba(201,123,132,.1);background:var(--warm-white);}
+  .form-group textarea{resize:vertical;min-height:70px;}
+  .form-section{margin-bottom:20px;}
+  .form-section-title{font-size:12px;font-weight:700;color:var(--rose-deep);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+  .contra-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+  .contra-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;font-size:12.5px;}
+  .contra-item:hover{background:var(--rose-pale);border-color:var(--rose-light);}
+  .contra-item input[type=checkbox]{accent-color:var(--rose-deep);width:15px;height:15px;cursor:pointer;flex-shrink:0;}
+  .contra-item.checked{background:#FEF3C7;border-color:#F59E0B;}
+  .contra-item.checked-abs{background:#fbeaea;border-color:var(--danger);}
+  .skin-eval-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+  .skin-eval-item{display:flex;flex-direction:column;gap:4px;}
+  .skin-eval-item label{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;}
+  .skin-eval-item select{padding:7px 10px;border:1px solid var(--border);border-radius:8px;font-size:12.5px;background:var(--cream);color:var(--charcoal);outline:none;}
+  .range-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+  .range-group label{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;}
+  .range-row{display:flex;align-items:center;gap:10px;}
+  .range-row input[type=range]{flex:1;accent-color:var(--rose);}
+  .range-val{font-size:13px;font-weight:700;color:var(--rose-deep);min-width:24px;text-align:center;}
+  .hallazgos-grid{display:flex;flex-wrap:wrap;gap:6px;}
+  .hallazgo-tag{display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;transition:all .15s;}
+  .hallazgo-tag:hover{background:var(--rose-pale);}
+  .hallazgo-tag input{accent-color:var(--rose-deep);}
+  .hallazgo-tag.selected{background:var(--rose-pale);border-color:var(--rose);color:var(--rose-deep);font-weight:600;}
+  .detail-header{display:flex;gap:20px;align-items:flex-start;margin-bottom:24px;}
+  .detail-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--rose-light),var(--rose));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:#fff;flex-shrink:0;}
+  .detail-info h2{font-size:20px;font-weight:700;}
+  .detail-meta{display:flex;gap:12px;margin-top:6px;flex-wrap:wrap;}
+  .detail-meta span{font-size:12px;color:var(--mid);}
+  .detail-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:20px;}
+  .detail-tab{padding:10px 18px;font-size:13px;font-weight:500;color:var(--mid);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;}
+  .detail-tab:hover{color:var(--rose-deep);}
+  .detail-tab.active{color:var(--rose-deep);border-bottom-color:var(--rose);}
+  .detail-panel{display:none;}.detail-panel.active{display:block;}
+  .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+  .info-item label{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:3px;}
+  .info-item span{font-size:13.5px;}
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:2px;background:var(--border);}
+  .timeline-item{position:relative;margin-bottom:20px;}
+  .timeline-dot{position:absolute;left:-23px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--rose);border:2px solid var(--warm-white);box-shadow:0 0 0 2px var(--rose);}
+  .session-card{background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:16px;}
+  .session-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .session-date{font-size:13px;font-weight:600;color:var(--rose-deep);}
+  .session-days-ago{font-size:11px;color:var(--mid);background:var(--rose-pale);padding:2px 8px;border-radius:20px;}
+  .session-num{font-size:11px;font-weight:700;color:#fff;background:var(--rose);padding:2px 8px;border-radius:20px;}
+  .session-treatment{font-size:15px;font-weight:700;margin-bottom:10px;}
+  .session-field{display:flex;gap:8px;margin-top:7px;}
+  .session-field label{font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;min-width:100px;flex-shrink:0;padding-top:1px;}
+  .session-field span{font-size:12.5px;flex:1;}
+  .session-divider{border:none;border-top:1px dashed var(--border);margin:10px 0;}
+  .skin-chips{display:flex;flex-wrap:wrap;gap:4px;}
+  .skin-chip{padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;}
+  .chip-warn{background:#fbeaea;color:var(--danger);}
+  .chip-ok{background:#eaf4ec;color:var(--success);}
+  .chip-info{background:var(--rose-pale);color:var(--rose-deep);}
+  .ciclo-badge{display:inline-flex;align-items:center;gap:6px;background:var(--sage-light);color:var(--sage);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+  .product-tag{display:inline-block;padding:3px 10px;border-radius:20px;background:var(--sage-light);color:var(--sage);font-size:11px;font-weight:500;margin:2px;}
+  .agenda-controls{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+  .agenda-controls h3{font-size:16px;font-weight:600;flex:1;text-align:center;}
+  .week-grid{display:grid;grid-template-columns:60px repeat(7,1fr);border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--warm-white);}
+  .week-header{background:var(--rose-pale);padding:10px 6px;text-align:center;font-size:12px;font-weight:600;color:var(--rose-deep);border-bottom:2px solid var(--border);}
+  .week-header.time-col{background:var(--cream);color:var(--mid);}
+  .week-header.today{background:var(--rose);color:#fff;}
+  .time-slot{border-bottom:1px solid var(--border);min-height:48px;position:relative;}
+  .time-label{font-size:10px;color:var(--mid);text-align:right;border-bottom:1px solid var(--border);min-height:48px;display:flex;align-items:flex-start;justify-content:flex-end;padding:4px 8px 0 0;}
+  .appt-block{position:absolute;inset:2px;border-radius:6px;background:var(--rose);color:#fff;font-size:11px;padding:4px 6px;cursor:pointer;overflow:hidden;}
+  .alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:12px;}
+  .alert-info{background:#EFF6FF;color:#1E40AF;border:1px solid #BFDBFE;}
+  .alert-warn{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A;}
+  .alert-danger{background:#fbeaea;color:#9b1c1c;border:1px solid #FCA5A5;}
+  .empty-state{text-align:center;padding:48px 20px;color:var(--mid);}
+  .empty-state .empty-icon{font-size:48px;margin-bottom:12px;}
+  .empty-state p{font-size:14px;margin-bottom:16px;}
+  .config-section{max-width:500px;margin:60px auto;text-align:center;}
+  .config-section .logo{font-size:48px;margin-bottom:16px;}
+  .config-section h2{font-size:22px;font-weight:700;margin-bottom:8px;color:var(--rose-deep);}
+  .config-section p{font-size:14px;color:var(--mid);margin-bottom:28px;}
+  .config-section .card{text-align:left;}
+  #toast{position:fixed;bottom:24px;right:24px;background:var(--charcoal);color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;}
+  #toast.show{transform:translateY(0);opacity:1;}
+  ::-webkit-scrollbar{width:6px;height:6px;}
+  ::-webkit-scrollbar-thumb{background:var(--rose-light);border-radius:3px;}
 </style>
 </head>
 <body>
-
-<!-- SIDEBAR -->
 <div id="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">🌸</div>
-    <h1>Cosmetología</h1>
+    <h1>Cosmetologia</h1>
     <p id="clinic-name-display">Consultorio</p>
   </div>
   <nav>
-    <a class="active" onclick="showView('dashboard')" id="nav-dashboard">
-      <span class="nav-icon">📊</span> Inicio
-    </a>
-    <a onclick="showView('clients')" id="nav-clients">
-      <span class="nav-icon">👤</span> Clientes
-    </a>
-    <a onclick="showView('agenda')" id="nav-agenda">
-      <span class="nav-icon">📅</span> Agenda
-    </a>
-    <a onclick="showView('settings')" id="nav-settings">
-      <span class="nav-icon">⚙️</span> Configuración
-    </a>
+    <a class="active" onclick="showView('dashboard')" id="nav-dashboard"><span class="nav-icon">📊</span> Inicio</a>
+    <a onclick="showView('clients')" id="nav-clients"><span class="nav-icon">👤</span> Clientes</a>
+    <a onclick="showView('agenda')" id="nav-agenda"><span class="nav-icon">📅</span> Agenda</a>
+    <a onclick="showView('settings')" id="nav-settings"><span class="nav-icon">⚙️</span> Configuracion</a>
   </nav>
-  <div class="sidebar-footer">
-    v1.0 · Firebase
-  </div>
+  <div class="sidebar-footer">v2.0 - Firebase</div>
 </div>
-
-<!-- MAIN -->
 <div id="main">
   <header>
-    <div>
-      <h2 id="view-title">Inicio</h2>
-      <div class="subtitle" id="view-subtitle">Resumen del consultorio</div>
-    </div>
+    <div><h2 id="view-title">Inicio</h2><div class="subtitle" id="view-subtitle">Resumen del consultorio</div></div>
     <div class="header-actions" id="header-actions"></div>
   </header>
-
   <div class="content">
-
-    <!-- ══ SETUP VIEW ══ -->
     <div id="view-setup" class="view active">
       <div class="config-section">
         <div class="logo">🌸</div>
         <h2>Configurar Firebase</h2>
-        <p>Ingresá los datos de tu proyecto Firebase para conectar la base de datos.</p>
+        <p>Ingresa los datos de tu proyecto Firebase para conectar la base de datos.</p>
         <div class="card">
           <div class="form-section-title">🔥 Firebase Config</div>
-          <div style="display:flex; flex-direction:column; gap:12px;">
-            <div class="form-group">
-              <label>API Key</label>
-              <input type="text" id="cfg-apiKey" placeholder="AIzaSy...">
-            </div>
-            <div class="form-group">
-              <label>Auth Domain</label>
-              <input type="text" id="cfg-authDomain" placeholder="mi-proyecto.firebaseapp.com">
-            </div>
-            <div class="form-group">
-              <label>Database URL</label>
-              <input type="text" id="cfg-databaseURL" placeholder="https://mi-proyecto-default-rtdb.firebaseio.com">
-            </div>
-            <div class="form-group">
-              <label>Project ID</label>
-              <input type="text" id="cfg-projectId" placeholder="mi-proyecto">
-            </div>
-            <div class="form-group">
-              <label>App Bucket</label>
-              <input type="text" id="cfg-storageBucket" placeholder="mi-proyecto.appspot.com">
-            </div>
-            <div class="form-group">
-              <label>Messaging Sender ID</label>
-              <input type="text" id="cfg-messagingSenderId" placeholder="123456789">
-            </div>
-            <div class="form-group">
-              <label>App ID</label>
-              <input type="text" id="cfg-appId" placeholder="1:123...">
-            </div>
-            <div class="form-group">
-              <label>Nombre del Consultorio</label>
-              <input type="text" id="cfg-clinicName" placeholder="Ej: Studio Piel · María García">
-            </div>
-            <button class="btn btn-primary" onclick="saveConfig()" style="margin-top:8px;">
-              Conectar y guardar
-            </button>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="form-group"><label>API Key</label><input type="text" id="cfg-apiKey" placeholder="AIzaSy..."></div>
+            <div class="form-group"><label>Auth Domain</label><input type="text" id="cfg-authDomain" placeholder="mi-proyecto.firebaseapp.com"></div>
+            <div class="form-group"><label>Database URL</label><input type="text" id="cfg-databaseURL" placeholder="https://mi-proyecto-default-rtdb.firebaseio.com"></div>
+            <div class="form-group"><label>Project ID</label><input type="text" id="cfg-projectId" placeholder="mi-proyecto"></div>
+            <div class="form-group"><label>App Bucket</label><input type="text" id="cfg-storageBucket" placeholder="mi-proyecto.appspot.com"></div>
+            <div class="form-group"><label>Messaging Sender ID</label><input type="text" id="cfg-messagingSenderId" placeholder="123456789"></div>
+            <div class="form-group"><label>App ID</label><input type="text" id="cfg-appId" placeholder="1:123..."></div>
+            <div class="form-group"><label>Nombre del Consultorio</label><input type="text" id="cfg-clinicName" placeholder="Ej: Studio Piel"></div>
+            <button class="btn btn-primary" onclick="saveConfig()" style="margin-top:8px;">Conectar y guardar</button>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- ══ DASHBOARD ══ -->
     <div id="view-dashboard" class="view">
       <div class="stats-row">
-        <div class="stat-card">
-          <div class="stat-label">Clientes activos</div>
-          <div class="stat-value" id="stat-clients">—</div>
-          <div class="stat-sub">registrados</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Sesiones totales</div>
-          <div class="stat-value" id="stat-sessions">—</div>
-          <div class="stat-sub">en historial</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Turnos esta semana</div>
-          <div class="stat-value" id="stat-week">—</div>
-          <div class="stat-sub">agendados</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Cobrado este mes</div>
-          <div class="stat-value" id="stat-revenue">—</div>
-          <div class="stat-sub">en pagos</div>
-        </div>
+        <div class="stat-card"><div class="stat-label">Clientes</div><div class="stat-value" id="stat-clients">-</div><div class="stat-sub">registradas</div></div>
+        <div class="stat-card"><div class="stat-label">Sesiones</div><div class="stat-value" id="stat-sessions">-</div><div class="stat-sub">en historial</div></div>
+        <div class="stat-card"><div class="stat-label">Turnos esta semana</div><div class="stat-value" id="stat-week">-</div><div class="stat-sub">agendados</div></div>
+        <div class="stat-card"><div class="stat-label">Cobrado este mes</div><div class="stat-value" id="stat-revenue">-</div><div class="stat-sub">en pagos</div></div>
       </div>
-
-      <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:20px;">
-        <div class="card">
-          <div class="card-title">📅 Próximos turnos</div>
-          <div id="upcoming-list">
-            <div class="empty-state" style="padding:20px">
-              <p style="margin:0">Sin turnos próximos</p>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-title">🕐 Últimas sesiones</div>
-          <div id="recent-sessions-list">
-            <div class="empty-state" style="padding:20px">
-              <p style="margin:0">Sin sesiones recientes</p>
-            </div>
-          </div>
-        </div>
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px;">
+        <div class="card"><div class="card-title">📅 Proximos turnos</div><div id="upcoming-list"><div class="empty-state" style="padding:20px"><p style="margin:0">Sin turnos proximos</p></div></div></div>
+        <div class="card"><div class="card-title">🕐 Ultimas sesiones</div><div id="recent-sessions-list"><div class="empty-state" style="padding:20px"><p style="margin:0">Sin sesiones recientes</p></div></div></div>
       </div>
     </div>
-
-    <!-- ══ CLIENTS LIST ══ -->
     <div id="view-clients" class="view">
       <div class="search-bar">
-        <input type="text" id="client-search" placeholder="🔍 Buscar por nombre, teléfono..." oninput="filterClients()">
-        <select id="skin-filter" onchange="filterClients()" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; background:var(--warm-white); color:var(--charcoal); outline:none;">
+        <input type="text" id="client-search" placeholder="Buscar por nombre, telefono..." oninput="filterClients()">
+        <select id="skin-filter" onchange="filterClients()" style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--warm-white);color:var(--charcoal);outline:none;">
           <option value="">Todos los tipos de piel</option>
-          <option value="Seca">Seca</option>
-          <option value="Mixta">Mixta</option>
-          <option value="Grasa">Grasa</option>
-          <option value="Sensible">Sensible</option>
-          <option value="Normal">Normal</option>
+          <option>Seca</option><option>Mixta</option><option>Grasa</option><option>Sensible</option><option>Normal</option>
         </select>
       </div>
-      <div class="card" style="padding:0; overflow:hidden;">
+      <div class="card" style="padding:0;overflow:hidden;">
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Cliente</th>
-                <th>Edad</th>
-                <th>Tipo de piel</th>
-                <th>Teléfono</th>
-                <th>Última sesión</th>
-                <th>Alergias</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="clients-tbody">
-              <tr><td colspan="7"><div class="empty-state"><div class="empty-icon">👤</div><p>Sin clientes registrados</p></div></td></tr>
-            </tbody>
+            <thead><tr><th>Cliente</th><th>Edad</th><th>Piel</th><th>Telefono</th><th>Ultima sesion</th><th>Contraind.</th><th></th></tr></thead>
+            <tbody id="clients-tbody"></tbody>
           </table>
         </div>
       </div>
     </div>
-
-    <!-- ══ CLIENT DETAIL ══ -->
     <div id="view-client-detail" class="view">
-      <div style="margin-bottom:16px;">
-        <button class="btn btn-ghost btn-sm" onclick="showView('clients')">← Volver a clientes</button>
-      </div>
+      <div style="margin-bottom:16px;"><button class="btn btn-ghost btn-sm" onclick="showView('clients')">← Volver</button></div>
       <div class="card">
         <div class="detail-header">
           <div class="detail-avatar" id="detail-avatar"></div>
-          <div class="detail-info" style="flex:1">
-            <h2 id="detail-name"></h2>
-            <div class="detail-meta" id="detail-meta"></div>
-          </div>
-          <div style="display:flex; gap:8px;">
+          <div class="detail-info" style="flex:1"><h2 id="detail-name"></h2><div class="detail-meta" id="detail-meta"></div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button class="btn btn-secondary btn-sm" onclick="openEditClientModal()">✏️ Editar ficha</button>
-            <button class="btn btn-primary btn-sm" onclick="openNewSessionModal()">+ Nueva sesión</button>
+            <button class="btn btn-primary btn-sm" onclick="openNewSessionModal()">+ Nueva sesion</button>
             <button class="btn btn-ghost btn-sm" onclick="openNewApptModal()">📅 Turno</button>
           </div>
         </div>
         <div class="detail-tabs">
-          <div class="detail-tab active" onclick="switchDetailTab('info', this)">📋 Ficha clínica</div>
-          <div class="detail-tab" onclick="switchDetailTab('sessions', this)">🧴 Sesiones</div>
-          <div class="detail-tab" onclick="switchDetailTab('payments', this)">💰 Pagos</div>
+          <div class="detail-tab active" onclick="switchDetailTab('info',this)">📋 Ficha clinica</div>
+          <div class="detail-tab" onclick="switchDetailTab('sessions',this)">🧴 Sesiones</div>
+          <div class="detail-tab" onclick="switchDetailTab('payments',this)">💰 Pagos</div>
         </div>
         <div id="detail-panel-info" class="detail-panel active"></div>
         <div id="detail-panel-sessions" class="detail-panel"></div>
         <div id="detail-panel-payments" class="detail-panel"></div>
       </div>
     </div>
-
-    <!-- ══ AGENDA ══ -->
     <div id="view-agenda" class="view">
       <div class="agenda-controls">
         <button class="btn btn-ghost btn-sm" onclick="changeWeek(-1)">← Anterior</button>
@@ -647,129 +263,126 @@
       </div>
       <div id="week-grid-container"></div>
     </div>
-
-    <!-- ══ SETTINGS ══ -->
     <div id="view-settings" class="view">
       <div style="max-width:500px;">
         <div class="card" style="margin-bottom:20px;">
           <div class="card-title">⚙️ Nombre del consultorio</div>
-          <div class="form-group" style="margin-bottom:12px;">
-            <label>Nombre</label>
-            <input type="text" id="settings-clinic-name" placeholder="Studio Piel · María García">
-          </div>
+          <div class="form-group" style="margin-bottom:12px;"><label>Nombre</label><input type="text" id="settings-clinic-name"></div>
           <button class="btn btn-primary btn-sm" onclick="saveClinicName()">Guardar</button>
         </div>
         <div class="card" style="margin-bottom:20px;">
           <div class="card-title">🔥 Reconectar Firebase</div>
-          <p style="font-size:13px; color:var(--mid); margin-bottom:12px;">Cambiá la base de datos conectada.</p>
-          <button class="btn btn-ghost btn-sm" onclick="resetConfig()">Cambiar configuración Firebase</button>
+          <p style="font-size:13px;color:var(--mid);margin-bottom:12px;">Cambia la base de datos conectada.</p>
+          <button class="btn btn-ghost btn-sm" onclick="resetConfig()">Cambiar configuracion Firebase</button>
         </div>
         <div class="card">
           <div class="card-title">📤 Exportar datos</div>
-          <p style="font-size:13px; color:var(--mid); margin-bottom:12px;">Descargá todos los datos del consultorio en JSON.</p>
           <button class="btn btn-secondary btn-sm" onclick="exportData()">Exportar JSON</button>
         </div>
       </div>
     </div>
-
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- TOAST -->
+  </div>
+</div>
 <div id="toast"></div>
 
-<!-- ═══════════ MODALS ═══════════ -->
-
-<!-- NEW/EDIT CLIENT -->
+<!-- MODAL CLIENTE -->
 <div class="modal-overlay" id="modal-client">
-  <div class="modal">
-    <div class="modal-header">
-      <h3 id="modal-client-title">Nueva cliente</h3>
-      <button class="modal-close" onclick="closeModal('modal-client')">✕</button>
-    </div>
+  <div class="modal modal-lg">
+    <div class="modal-header"><h3 id="modal-client-title">Nueva cliente</h3><button class="modal-close" onclick="closeModal('modal-client')">✕</button></div>
     <div class="modal-body">
       <div class="form-section">
         <div class="form-section-title">👤 Datos personales</div>
         <div class="form-grid">
-          <div class="form-group form-full">
-            <label>Nombre completo *</label>
-            <input type="text" id="c-name" placeholder="Ana García">
-          </div>
-          <div class="form-group">
-            <label>Fecha de nacimiento</label>
-            <input type="date" id="c-dob">
-          </div>
-          <div class="form-group">
-            <label>Teléfono</label>
-            <input type="tel" id="c-phone" placeholder="+54 11 1234-5678">
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="c-email" placeholder="ana@email.com">
-          </div>
-          <div class="form-group">
-            <label>¿Cómo nos conoció?</label>
-            <select id="c-source">
-              <option value="">— seleccionar —</option>
-              <option>Instagram</option>
-              <option>Derivación médica</option>
-              <option>Recomendación</option>
-              <option>Google</option>
-              <option>Otro</option>
-            </select>
-          </div>
+          <div class="form-group form-full"><label>Nombre completo *</label><input type="text" id="c-name" placeholder="Ana Garcia"></div>
+          <div class="form-group"><label>Fecha de nacimiento</label><input type="date" id="c-dob"></div>
+          <div class="form-group"><label>Telefono</label><input type="tel" id="c-phone" placeholder="+54 11 1234-5678"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="c-email"></div>
+          <div class="form-group"><label>Como nos conocio?</label><select id="c-source"><option value="">- seleccionar -</option><option>Instagram</option><option>Derivacion medica</option><option>Recomendacion</option><option>Google</option><option>Otro</option></select></div>
         </div>
       </div>
       <div class="form-section">
         <div class="form-section-title">🌿 Tipo de piel</div>
         <div class="form-grid">
-          <div class="form-group">
-            <label>Tipo de piel</label>
-            <select id="c-skintype">
-              <option value="">— seleccionar —</option>
-              <option>Seca</option>
-              <option>Mixta</option>
-              <option>Grasa</option>
-              <option>Sensible</option>
-              <option>Normal</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Fototipo (Fitzpatrick)</label>
-            <select id="c-fitzpatrick">
-              <option value="">— seleccionar —</option>
-              <option>I - Muy claro</option>
-              <option>II - Claro</option>
-              <option>III - Intermedio</option>
-              <option>IV - Oliváceo</option>
-              <option>V - Marrón</option>
-              <option>VI - Oscuro</option>
-            </select>
-          </div>
-          <div class="form-group form-full">
-            <label>Observaciones de piel</label>
-            <textarea id="c-skinobs" placeholder="Manchas, acné, rosácea, cicatrices..."></textarea>
-          </div>
+          <div class="form-group"><label>Tipo de piel</label><select id="c-skintype"><option value="">- seleccionar -</option><option>Seca</option><option>Mixta</option><option>Grasa</option><option>Sensible</option><option>Normal</option></select></div>
+          <div class="form-group"><label>Fototipo (Fitzpatrick)</label><select id="c-fitzpatrick"><option value="">- seleccionar -</option><option>I - Muy claro</option><option>II - Claro</option><option>III - Intermedio</option><option>IV - Olivaceo</option><option>V - Marron</option><option>VI - Oscuro</option></select></div>
+          <div class="form-group form-full"><label>Observaciones de piel</label><textarea id="c-skinobs" placeholder="Manchas, acne, rosace, cicatrices..."></textarea></div>
         </div>
       </div>
       <div class="form-section">
-        <div class="form-section-title">⚠️ Alergias y contraindicaciones</div>
+        <div class="form-section-title">💊 Medicamentos y salud</div>
         <div class="form-grid">
-          <div class="form-group form-full">
-            <label>Alergias conocidas</label>
-            <textarea id="c-allergies" placeholder="Ej: Retinol, ácido glicólico..."></textarea>
-          </div>
-          <div class="form-group form-full">
-            <label>Patologías / condiciones médicas relevantes</label>
-            <textarea id="c-conditions" placeholder="Ej: Lupus, rosácea severa, embarazo, uso de isotretinoína..."></textarea>
-          </div>
+          <div class="form-group"><label>Medicamentos actuales</label><textarea id="c-meds" placeholder="Ej: Isotretinoina, antibioticos, corticoides..."></textarea></div>
+          <div class="form-group"><label>Anticonceptivos</label><select id="c-contraceptive"><option value="">- seleccionar -</option><option>No usa</option><option>Pastillas</option><option>DIU hormonal</option><option>DIU de cobre</option><option>Implante</option><option>Inyectable</option><option>Otro</option></select></div>
+          <div class="form-group"><label>Exposicion solar habitual</label><select id="c-sun"><option value="">- seleccionar -</option><option>Baja (trabaja en interior)</option><option>Moderada</option><option>Alta (trabaja al aire libre)</option></select></div>
+          <div class="form-group form-full"><label>Patologias / condiciones medicas relevantes</label><textarea id="c-conditions" placeholder="Ej: Lupus, rosace severa, diabetes..."></textarea></div>
+          <div class="form-group form-full"><label>Objetivo del tratamiento</label><textarea id="c-goal" placeholder="Ej: Control de acne, manchas post-inflamatorias, antiage, hidratacion..."></textarea></div>
         </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">💉 Antecedentes esteticos</div>
+        <div class="form-grid">
+          <div class="form-group"><label>Botox / Toxina botulinica</label><select id="c-botox"><option value="">- seleccionar -</option><option>No se aplica</option><option>Si, activo</option><option>Si, hace menos de 3 meses</option><option>Si, hace 3-6 meses</option><option>Si, hace mas de 6 meses</option></select></div>
+          <div class="form-group"><label>Zona de botox</label><input type="text" id="c-botox-zone" placeholder="Ej: Frente, entrecejo, patas de gallo..."></div>
+          <div class="form-group"><label>Cirugia plastica</label><select id="c-surgery"><option value="">- seleccionar -</option><option>No</option><option>Si</option></select></div>
+          <div class="form-group"><label>Cual cirugia y cuando</label><input type="text" id="c-surgery-detail" placeholder="Ej: Rinoplastia 2022, bichectomia 2020..."></div>
+          <div class="form-group form-full"><label>Tratamientos dermatologicos recientes (ultimo ano)</label></div>
+          <div class="form-group form-full">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="c-derm-txs">
+              <label class="contra-item" id="dtx-0"><input type="checkbox" onchange="toggleDtx(0,this)"> Laser (ablativo / no ablativo)</label>
+              <label class="contra-item" id="dtx-1"><input type="checkbox" onchange="toggleDtx(1,this)"> Peeling quimico profundo</label>
+              <label class="contra-item" id="dtx-2"><input type="checkbox" onchange="toggleDtx(2,this)"> IPL / Luz pulsada</label>
+              <label class="contra-item" id="dtx-3"><input type="checkbox" onchange="toggleDtx(3,this)"> Radiofrecuencia</label>
+              <label class="contra-item" id="dtx-4"><input type="checkbox" onchange="toggleDtx(4,this)"> Microagujas / Dermapen</label>
+              <label class="contra-item" id="dtx-5"><input type="checkbox" onchange="toggleDtx(5,this)"> Ultrasonido focalizado (HIFU)</label>
+              <label class="contra-item" id="dtx-6"><input type="checkbox" onchange="toggleDtx(6,this)"> Rellenos / Fillers</label>
+              <label class="contra-item" id="dtx-7"><input type="checkbox" onchange="toggleDtx(7,this)"> Mesoterapia</label>
+            </div>
+          </div>
+          <div class="form-group form-full"><label>Detalle y fecha de tratamientos dermatologicos</label><textarea id="c-derm-detail" placeholder="Ej: Laser CO2 fraccional - marzo 2025, filler labios - enero 2025..."></textarea></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">🏥 Tratamiento dermatologico activo</div>
+        <div class="form-grid">
+          <div class="form-group"><label>En tratamiento con dermatologa actualmente</label><select id="c-derm-active"><option value="">- seleccionar -</option><option>No</option><option>Si</option></select></div>
+          <div class="form-group"><label>Proxima consulta dermatologica</label><input type="date" id="c-derm-next"></div>
+          <div class="form-group form-full"><label>Productos prescriptos por dermatologa</label><textarea id="c-derm-rx" placeholder="Ej: Tretinoina 0.025% noche, Azelan crema, antibiotico topico..."></textarea></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">🧴 Rutina skincare actual</div>
+        <div class="form-grid">
+          <div class="form-group"><label>Usa protector solar</label><select id="c-sunscreen"><option value="">- seleccionar -</option><option>Siempre (todos los dias)</option><option>A veces</option><option>No usa</option></select></div>
+          <div class="form-group"><label>SPF habitual</label><select id="c-spf"><option value="">- seleccionar -</option><option>SPF 15-30</option><option>SPF 50</option><option>SPF 50+</option><option>No sabe</option></select></div>
+          <div class="form-group form-full"><label>Productos activos que usa (marca todos los que aplican)</label></div>
+          <div class="form-group form-full">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+              <label class="contra-item" id="sk-0"><input type="checkbox" onchange="toggleSk(0,this)"> Limpiador</label>
+              <label class="contra-item" id="sk-1"><input type="checkbox" onchange="toggleSk(1,this)"> Hidratante</label>
+              <label class="contra-item" id="sk-2"><input type="checkbox" onchange="toggleSk(2,this)"> Protector solar</label>
+              <label class="contra-item" id="sk-3"><input type="checkbox" onchange="toggleSk(3,this)"> Vitamina C</label>
+              <label class="contra-item" id="sk-4"><input type="checkbox" onchange="toggleSk(4,this)"> Retinol / Retinoides</label>
+              <label class="contra-item" id="sk-5"><input type="checkbox" onchange="toggleSk(5,this)"> AHA (glicolico, lactico, mandelico)</label>
+              <label class="contra-item" id="sk-6"><input type="checkbox" onchange="toggleSk(6,this)"> BHA (salicilico)</label>
+              <label class="contra-item" id="sk-7"><input type="checkbox" onchange="toggleSk(7,this)"> Niacinamida</label>
+              <label class="contra-item" id="sk-8"><input type="checkbox" onchange="toggleSk(8,this)"> Acido hialuronico topico</label>
+              <label class="contra-item" id="sk-9"><input type="checkbox" onchange="toggleSk(9,this)"> Peptidos</label>
+              <label class="contra-item" id="sk-10"><input type="checkbox" onchange="toggleSk(10,this)"> Exfoliante fisico</label>
+              <label class="contra-item" id="sk-11"><input type="checkbox" onchange="toggleSk(11,this)"> Otros acidos</label>
+            </div>
+          </div>
+          <div class="form-group form-full"><label>Detalle de productos (marcas, concentraciones)</label><textarea id="c-skincare-detail" placeholder="Ej: Limpiador CeraVe, Vitamina C 15% The Ordinary, Retinol 0.5% Paula's Choice..."></textarea></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">⚠️ Contraindicaciones</div>
+        <p style="font-size:12px;color:var(--mid);margin-bottom:10px;">Marca las que aplican. <span style="color:#b45309;font-weight:600;">Amarillas</span> = relativas. <span style="color:var(--danger);font-weight:600;">Rojas</span> = absolutas.</p>
+        <div class="contra-grid" id="c-contra-grid"></div>
+        <div class="form-group" style="margin-top:12px;"><label>Alergias conocidas</label><textarea id="c-allergies" placeholder="Ej: Retinol, acido glicolico, parabenos..."></textarea></div>
       </div>
       <div class="form-section">
         <div class="form-section-title">📝 Notas generales</div>
-        <div class="form-group">
-          <textarea id="c-notes" placeholder="Preferencias, objetivo del tratamiento, frecuencia ideal..."></textarea>
-        </div>
+        <div class="form-group"><textarea id="c-notes" placeholder="Preferencias, observaciones adicionales..."></textarea></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -779,116 +392,72 @@
   </div>
 </div>
 
-<!-- NEW SESSION -->
+<!-- MODAL SESION -->
 <div class="modal-overlay" id="modal-session">
   <div class="modal modal-lg">
-    <div class="modal-header">
-      <h3>Nueva sesión</h3>
-      <button class="modal-close" onclick="closeModal('modal-session')">✕</button>
-    </div>
+    <div class="modal-header"><h3>Nueva sesion</h3><button class="modal-close" onclick="closeModal('modal-session')">✕</button></div>
     <div class="modal-body">
       <div class="form-section">
-        <div class="form-section-title">🧴 Datos de la sesión</div>
+        <div class="form-section-title">🧴 Datos del tratamiento</div>
         <div class="form-grid">
-          <div class="form-group">
-            <label>Fecha *</label>
-            <input type="date" id="s-date">
-          </div>
-          <div class="form-group">
-            <label>Tratamiento realizado *</label>
-            <input type="text" id="s-treatment" placeholder="Ej: Limpieza profunda, Peeling de mandelic...">
-          </div>
-          <div class="form-group form-full">
-            <label>Productos aplicados (uno por línea)</label>
-            <textarea id="s-products" placeholder="Ej: Cleanser La Roche-Posay&#10;Ácido glicólico 15% — 3 capas&#10;Hyaluronic Serum Skinceuticals"></textarea>
-          </div>
-          <div class="form-group form-full">
-            <label>Reacción / estado de la piel</label>
-            <textarea id="s-reaction" placeholder="Cómo respondió la piel al tratamiento..."></textarea>
-          </div>
-          <div class="form-group form-full">
-            <label>Próximos pasos y recomendaciones</label>
-            <textarea id="s-next" placeholder="Cuidados en casa, próxima sesión, restricciones..."></textarea>
-          </div>
+          <div class="form-group"><label>Fecha *</label><input type="date" id="s-date"></div>
+          <div class="form-group"><label>Tratamiento realizado *</label><input type="text" id="s-treatment" placeholder="Ej: Limpieza profunda, Peeling..."></div>
+          <div class="form-group"><label>Zona tratada</label><select id="s-zone"><option value="">- seleccionar -</option><option>Rostro completo</option><option>Frente</option><option>Mejillas</option><option>Nariz</option><option>Menton</option><option>Contorno de ojos</option><option>Cuello</option><option>Escote</option><option>Espalda</option></select></div>
+          <div class="form-group"><label>Ciclo de tratamiento</label><input type="text" id="s-ciclo" placeholder="Ej: Ciclo acne - sesion 3 de 6"></div>
+          <div class="form-group form-full"><label>Productos aplicados (uno por linea)</label><textarea id="s-products" placeholder="Ej: Cleanser La Roche-Posay&#10;Acido glicolico 15% - 3 capas&#10;Mascarilla calmante Avene"></textarea></div>
+          <div class="form-group form-full"><label>Rutina domiciliaria recomendada</label><textarea id="s-homecare" placeholder="Ej: Vitamina C por la manana, retinol 0.25% dos veces por semana..."></textarea></div>
         </div>
       </div>
       <div class="form-section">
-        <div class="form-section-title">💰 Pago de esta sesión</div>
+        <div class="form-section-title">🔬 Evaluacion de piel en sesion</div>
+        <div class="skin-eval-grid">
+          <div class="skin-eval-item"><label>Hidratacion</label><select id="s-hidratacion"><option value="">-</option><option>Deshidratada</option><option>Normal</option><option>Bien hidratada</option></select></div>
+          <div class="skin-eval-item"><label>Seborrea</label><select id="s-seborrea"><option value="">-</option><option>Baja</option><option>Media</option><option>Alta</option></select></div>
+          <div class="skin-eval-item"><label>Tono</label><select id="s-tono"><option value="">-</option><option>Opaco</option><option>Normal</option><option>Luminoso</option></select></div>
+        </div>
+        <div class="range-group">
+          <label>Sensibilidad al momento (1 = muy baja - 5 = muy alta)</label>
+          <div class="range-row"><input type="range" id="s-sensibilidad" min="1" max="5" value="2" oninput="document.getElementById('s-sens-val').textContent=this.value"><span class="range-val" id="s-sens-val">2</span></div>
+        </div>
+        <div style="margin-bottom:8px;"><label style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;">Hallazgos presentes</label></div>
+        <div class="hallazgos-grid" id="s-hallazgos-grid"></div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">📝 Evolucion y seguimiento</div>
+        <div class="form-grid">
+          <div class="form-group form-full"><label>Reaccion / respuesta al tratamiento</label><textarea id="s-reaction" placeholder="Ej: Leve eritema post-peeling, bien tolerado..."></textarea></div>
+          <div class="form-group form-full"><label>Proximos pasos y recomendaciones</label><textarea id="s-next" placeholder="Cuidados en casa, proxima sesion, restricciones..."></textarea></div>
+        </div>
+      </div>
+      <div class="form-section">
+        <div class="form-section-title">💰 Pago de esta sesion</div>
         <div class="form-grid cols-3">
-          <div class="form-group">
-            <label>Monto</label>
-            <input type="number" id="s-amount" placeholder="0">
-          </div>
-          <div class="form-group">
-            <label>Medio de pago</label>
-            <select id="s-paymethod">
-              <option value="">— seleccionar —</option>
-              <option>Efectivo</option>
-              <option>Transferencia</option>
-              <option>Tarjeta débito</option>
-              <option>Tarjeta crédito</option>
-              <option>MercadoPago</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Estado del pago</label>
-            <select id="s-paystatus">
-              <option value="Pagado">Pagado</option>
-              <option value="Pendiente">Pendiente</option>
-              <option value="Parcial">Parcial</option>
-            </select>
-          </div>
+          <div class="form-group"><label>Monto</label><input type="number" id="s-amount" placeholder="0"></div>
+          <div class="form-group"><label>Medio de pago</label><select id="s-paymethod"><option value="">- seleccionar -</option><option>Efectivo</option><option>Transferencia</option><option>Tarjeta debito</option><option>Tarjeta credito</option><option>MercadoPago</option></select></div>
+          <div class="form-group"><label>Estado</label><select id="s-paystatus"><option value="Pagado">Pagado</option><option value="Pendiente">Pendiente</option><option value="Parcial">Parcial</option></select></div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-session')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveSession()">Guardar sesión</button>
+      <button class="btn btn-primary" onclick="saveSession()">Guardar sesion</button>
     </div>
   </div>
 </div>
 
-<!-- NEW APPOINTMENT -->
+<!-- MODAL TURNO -->
 <div class="modal-overlay" id="modal-appt">
   <div class="modal">
-    <div class="modal-header">
-      <h3 id="modal-appt-title">Nuevo turno</h3>
-      <button class="modal-close" onclick="closeModal('modal-appt')">✕</button>
-    </div>
+    <div class="modal-header"><h3>Nuevo turno</h3><button class="modal-close" onclick="closeModal('modal-appt')">✕</button></div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-group">
-          <label>Cliente *</label>
-          <select id="a-client"></select>
-        </div>
-        <div class="form-group">
-          <label>Tratamiento</label>
-          <input type="text" id="a-treatment" placeholder="Ej: Peeling enzimático">
-        </div>
-        <div class="form-group">
-          <label>Fecha *</label>
-          <input type="date" id="a-date">
-        </div>
-        <div class="form-group">
-          <label>Hora</label>
-          <input type="time" id="a-time">
-        </div>
-        <div class="form-group">
-          <label>Duración (min)</label>
-          <input type="number" id="a-duration" value="60" min="15" step="15">
-        </div>
-        <div class="form-group">
-          <label>Estado</label>
-          <select id="a-status">
-            <option value="Confirmado">Confirmado</option>
-            <option value="Pendiente">Pendiente confirmación</option>
-            <option value="Cancelado">Cancelado</option>
-          </select>
-        </div>
-        <div class="form-group form-full">
-          <label>Notas del turno</label>
-          <textarea id="a-notes" placeholder="Observaciones previas, preferencias..."></textarea>
-        </div>
+        <div class="form-group"><label>Cliente *</label><select id="a-client"></select></div>
+        <div class="form-group"><label>Tratamiento</label><input type="text" id="a-treatment" placeholder="Ej: Peeling enzimatico"></div>
+        <div class="form-group"><label>Fecha *</label><input type="date" id="a-date"></div>
+        <div class="form-group"><label>Hora</label><input type="time" id="a-time"></div>
+        <div class="form-group"><label>Duracion (min)</label><input type="number" id="a-duration" value="60" min="15" step="15"></div>
+        <div class="form-group"><label>Estado</label><select id="a-status"><option value="Confirmado">Confirmado</option><option value="Pendiente">Pendiente confirmacion</option><option value="Cancelado">Cancelado</option></select></div>
+        <div class="form-group form-full"><label>Notas del turno</label><textarea id="a-notes" placeholder="Observaciones previas..."></textarea></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -898,635 +467,477 @@
   </div>
 </div>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, push, remove, update, onValue }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, push, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// ─── STATE ───────────────────────────────────────────
-let db = null;
-let app = null;
-let allClients = {};
-let allSessions = {};
-let allAppts = {};
-let currentClientId = null;
-let currentWeekOffset = 0;
-let editingClientId = null;
-let editingApptId = null;
+let db=null,app=null;
+let allClients={},allSessions={},allAppts={};
+let currentClientId=null,currentWeekOffset=0,editingClientId=null;
 
-// ─── INIT ─────────────────────────────────────────────
-function init() {
-  const cfg = getStoredConfig();
-  if (!cfg) {
-    showSetup();
-    return;
-  }
-  try {
-    app = initializeApp(cfg.firebase, 'cosmetologia');
-    db = getDatabase(app);
-    document.getElementById('clinic-name-display').textContent = cfg.clinicName || 'Consultorio';
-    document.getElementById('settings-clinic-name').value = cfg.clinicName || '';
-    listenData();
-    showView('dashboard');
-  } catch(e) {
-    showSetup();
-  }
+const CONTRA=[
+  {label:'Isotretinoina activa o ultimos 6 meses',tipo:'abs'},
+  {label:'Embarazo / lactancia',tipo:'abs'},
+  {label:'Herpes activo en zona a tratar',tipo:'abs'},
+  {label:'Dermatitis activa / eccema',tipo:'abs'},
+  {label:'Cicatrices queloides',tipo:'abs'},
+  {label:'Alergia a ingredientes del tratamiento',tipo:'abs'},
+  {label:'Rosace severa',tipo:'rel'},
+  {label:'Cuperosis / telangiectasias',tipo:'rel'},
+  {label:'Psoriasis en zona a tratar',tipo:'rel'},
+  {label:'Exposicion solar reciente sin proteccion',tipo:'rel'},
+  {label:'Uso de corticoides topicos reciente',tipo:'rel'},
+  {label:'Diabetes / inmunosupresion',tipo:'rel'},
+  {label:'Peeling o procedimiento estetico reciente',tipo:'rel'},
+  {label:'Depilacion laser reciente en zona',tipo:'rel'},
+];
+const HALLAZGOS=['Comedones abiertos','Comedones cerrados','Papulas','Pustulas','Manchas (hiperpigmentacion)','Eritema','Cicatrices atroficas','Descamacion','Poros dilatados','Lineas finas','Bolsas / ojeras'];
+
+function buildContraGrid(cid,sel){
+  const g=document.getElementById(cid);if(!g)return;
+  g.innerHTML=CONTRA.map((c,i)=>{
+    const chk=sel&&sel[i];const cls=chk?(c.tipo==='abs'?'checked-abs':'checked'):'';
+    return `<label class="contra-item ${cls}" id="ci-${cid}-${i}"><input type="checkbox" ${chk?'checked':''} onchange="toggleContra('${cid}',${i},this,'${c.tipo}')"><span>${c.label}</span></label>`;
+  }).join('');
 }
-
-function getStoredConfig() {
-  const s = localStorage.getItem('cosmetologia_config');
-  return s ? JSON.parse(s) : null;
+window.toggleDtx=function(i,el){
+  const item=document.getElementById('dtx-'+i);
+  if(el.checked)item.classList.add('checked');else item.classList.remove('checked');
+};
+window.toggleSk=function(i,el){
+  const item=document.getElementById('sk-'+i);
+  if(el.checked)item.classList.add('checked');else item.classList.remove('checked');
+};
+function getDtxVals(){
+  const labels=['Laser','Peeling quimico profundo','IPL / Luz pulsada','Radiofrecuencia','Microagujas / Dermapen','HIFU','Rellenos / Fillers','Mesoterapia'];
+  return labels.filter((_,i)=>{const cb=document.querySelector('#dtx-'+i+' input');return cb&&cb.checked;});
 }
+function getSkVals(){
+  const labels=['Limpiador','Hidratante','Protector solar','Vitamina C','Retinol / Retinoides','AHA','BHA (salicilico)','Niacinamida','Acido hialuronico topico','Peptidos','Exfoliante fisico','Otros acidos'];
+  return labels.filter((_,i)=>{const cb=document.querySelector('#sk-'+i+' input');return cb&&cb.checked;});
+}
+function buildDtxGrid(sel){
+  [0,1,2,3,4,5,6,7].forEach(i=>{
+    const item=document.getElementById('dtx-'+i);const cb=item?.querySelector('input');
+    if(cb){cb.checked=sel&&sel.includes(cb.closest('label').textContent.trim());if(cb.checked)item.classList.add('checked');else item.classList.remove('checked');}
+  });
+}
+function buildSkGrid(sel){
+  [0,1,2,3,4,5,6,7,8,9,10,11].forEach(i=>{
+    const item=document.getElementById('sk-'+i);const cb=item?.querySelector('input');
+    if(cb){cb.checked=sel&&sel.includes(cb.closest('label').textContent.trim());if(cb.checked)item.classList.add('checked');else item.classList.remove('checked');}
+  });
+}
+window.toggleContra=function(cid,i,el,tipo){
+  const item=document.getElementById('ci-'+cid+'-'+i);
+  if(el.checked)item.classList.add(tipo==='abs'?'checked-abs':'checked');
+  else{item.classList.remove('checked');item.classList.remove('checked-abs');}
+};
+function getContraVals(cid){
+  const r={};
+  CONTRA.forEach((_,i)=>{const cb=document.querySelector('#ci-'+cid+'-'+i+' input');if(cb&&cb.checked)r[i]=true;});
+  return r;
+}
+function buildHallazgos(){
+  const g=document.getElementById('s-hallazgos-grid');if(!g)return;
+  g.innerHTML=HALLAZGOS.map((h,i)=>`<label class="hallazgo-tag" id="hg-${i}"><input type="checkbox" onchange="toggleHallazgo(${i},this)"> ${h}</label>`).join('');
+}
+window.toggleHallazgo=function(i,el){document.getElementById('hg-'+i).classList.toggle('selected',el.checked);};
+function getHallazgos(){return HALLAZGOS.filter((_,i)=>{const cb=document.querySelector('#hg-'+i+' input');return cb&&cb.checked;});}
 
-function showSetup() {
-  document.getElementById('sidebar').style.display = 'none';
-  document.getElementById('main').style.marginLeft = '0';
-  document.querySelector('header').style.display = 'none';
+function init(){
+  const cfg=getStoredConfig();
+  if(!cfg){showSetup();return;}
+  try{
+    app=initializeApp(cfg.firebase,'cosmetologia');
+    db=getDatabase(app);
+    document.getElementById('clinic-name-display').textContent=cfg.clinicName||'Consultorio';
+    document.getElementById('settings-clinic-name').value=cfg.clinicName||'';
+    listenData();showView('dashboard');
+  }catch(e){showSetup();}
+}
+function getStoredConfig(){const s=localStorage.getItem('cosmetologia_config');return s?JSON.parse(s):null;}
+function showSetup(){
+  document.getElementById('sidebar').style.display='none';
+  document.getElementById('main').style.marginLeft='0';
+  document.querySelector('header').style.display='none';
   document.getElementById('view-setup').classList.add('active');
 }
+window.saveConfig=function(){
+  const cfg={firebase:{apiKey:v('cfg-apiKey'),authDomain:v('cfg-authDomain'),databaseURL:v('cfg-databaseURL'),projectId:v('cfg-projectId'),storageBucket:v('cfg-storageBucket'),messagingSenderId:v('cfg-messagingSenderId'),appId:v('cfg-appId')},clinicName:v('cfg-clinicName')};
+  if(!cfg.firebase.apiKey||!cfg.firebase.databaseURL){toast('Completa al menos API Key y Database URL');return;}
+  localStorage.setItem('cosmetologia_config',JSON.stringify(cfg));location.reload();
+};
+function listenData(){
+  onValue(ref(db,'clients'),s=>{allClients=s.val()||{};refreshAll();});
+  onValue(ref(db,'sessions'),s=>{allSessions=s.val()||{};refreshAll();});
+  onValue(ref(db,'appointments'),s=>{allAppts=s.val()||{};refreshAll();});
+}
+function refreshAll(){renderClientsList();updateStats();renderDashboard();if(currentClientId)renderClientDetail();renderWeek();}
 
-window.saveConfig = function() {
-  const cfg = {
-    firebase: {
-      apiKey: v('cfg-apiKey'),
-      authDomain: v('cfg-authDomain'),
-      databaseURL: v('cfg-databaseURL'),
-      projectId: v('cfg-projectId'),
-      storageBucket: v('cfg-storageBucket'),
-      messagingSenderId: v('cfg-messagingSenderId'),
-      appId: v('cfg-appId'),
-    },
-    clinicName: v('cfg-clinicName')
-  };
-  if (!cfg.firebase.apiKey || !cfg.firebase.databaseURL) {
-    toast('Completá al menos el API Key y Database URL'); return;
-  }
-  localStorage.setItem('cosmetologia_config', JSON.stringify(cfg));
-  location.reload();
+window.showView=function(view){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  const titles={dashboard:['Inicio','Resumen del consultorio'],clients:['Clientes','Historial de pacientes'],'client-detail':['Ficha de cliente',''],agenda:['Agenda','Turnos semanales'],settings:['Configuracion','']};
+  const t=titles[view]||['',''];
+  document.getElementById('view-title').textContent=t[0];
+  document.getElementById('view-subtitle').textContent=t[1];
+  const el=document.getElementById('view-'+view);if(el)el.classList.add('active');
+  const nav=document.getElementById('nav-'+view);if(nav)nav.classList.add('active');
+  const ha=document.getElementById('header-actions');ha.innerHTML='';
+  if(view==='clients')ha.innerHTML=`<button class="btn btn-primary" onclick="openNewClientModal()">+ Nueva cliente</button>`;
+  if(view==='agenda')ha.innerHTML=`<button class="btn btn-primary" onclick="openNewApptModal()">+ Nuevo turno</button>`;
 };
 
-// ─── FIREBASE LISTENERS ───────────────────────────────
-function listenData() {
-  onValue(ref(db, 'clients'), snap => {
-    allClients = snap.val() || {};
-    refreshAll();
-  });
-  onValue(ref(db, 'sessions'), snap => {
-    allSessions = snap.val() || {};
-    refreshAll();
-  });
-  onValue(ref(db, 'appointments'), snap => {
-    allAppts = snap.val() || {};
-    refreshAll();
-  });
+function updateStats(){
+  document.getElementById('stat-clients').textContent=Object.keys(allClients).length;
+  let sc=0;Object.values(allSessions).forEach(cs=>sc+=Object.keys(cs).length);
+  document.getElementById('stat-sessions').textContent=sc;
+  const now=new Date();const mon=new Date(now);mon.setDate(now.getDate()-((now.getDay()+6)%7));mon.setHours(0,0,0,0);
+  const sun=new Date(mon);sun.setDate(mon.getDate()+6);
+  let wk=0;Object.values(allAppts).forEach(ca=>Object.values(ca).forEach(a=>{const d=new Date(a.date+'T00:00:00');if(d>=mon&&d<=sun)wk++;}));
+  document.getElementById('stat-week').textContent=wk;
+  const m=now.getMonth(),y=now.getFullYear();let rev=0;
+  Object.values(allSessions).forEach(cs=>Object.values(cs).forEach(s=>{if(s.date){const d=new Date(s.date+'T00:00:00');if(d.getMonth()===m&&d.getFullYear()===y&&s.amount)rev+=parseFloat(s.amount)||0;}}));
+  document.getElementById('stat-revenue').textContent=rev>0?'$'+rev.toLocaleString('es-AR'):'-';
 }
 
-function refreshAll() {
-  renderClientsList();
-  updateStats();
-  renderDashboard();
-  if (currentClientId) renderClientDetail();
-  renderWeek();
-}
-
-// ─── NAVIGATION ───────────────────────────────────────
-window.showView = function(view) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-
-  const titles = {
-    dashboard: ['Inicio', 'Resumen del consultorio'],
-    clients: ['Clientes', 'Historial de pacientes'],
-    'client-detail': ['Ficha de cliente', ''],
-    agenda: ['Agenda', 'Turnos semanales'],
-    settings: ['Configuración', ''],
-  };
-  const t = titles[view] || ['', ''];
-  document.getElementById('view-title').textContent = t[0];
-  document.getElementById('view-subtitle').textContent = t[1];
-
-  const el = document.getElementById('view-' + view);
-  if (el) el.classList.add('active');
-
-  const nav = document.getElementById('nav-' + view);
-  if (nav) nav.classList.add('active');
-
-  // Header actions
-  const ha = document.getElementById('header-actions');
-  ha.innerHTML = '';
-  if (view === 'clients') {
-    ha.innerHTML = `<button class="btn btn-primary" onclick="openNewClientModal()">+ Nueva cliente</button>`;
-  }
-  if (view === 'agenda') {
-    ha.innerHTML = `<button class="btn btn-primary" onclick="openNewApptModal()">+ Nuevo turno</button>`;
-  }
-};
-
-// ─── STATS ────────────────────────────────────────────
-function updateStats() {
-  const clientCount = Object.keys(allClients).length;
-  document.getElementById('stat-clients').textContent = clientCount;
-
-  let sessionCount = 0;
-  Object.values(allSessions).forEach(cs => sessionCount += Object.keys(cs).length);
-  document.getElementById('stat-sessions').textContent = sessionCount;
-
-  const now = new Date();
-  const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - now.getDay() + 1);
-  startOfWeek.setHours(0,0,0,0);
-  const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 6);
-
-  let weekAppts = 0;
-  Object.values(allAppts).forEach(ca => {
-    Object.values(ca).forEach(a => {
-      const d = new Date(a.date);
-      if (d >= startOfWeek && d <= endOfWeek) weekAppts++;
-    });
-  });
-  document.getElementById('stat-week').textContent = weekAppts;
-
-  // Revenue this month
-  const month = now.getMonth(); const year = now.getFullYear();
-  let revenue = 0;
-  Object.values(allSessions).forEach(cs => {
-    Object.values(cs).forEach(s => {
-      if (s.date) {
-        const d = new Date(s.date);
-        if (d.getMonth() === month && d.getFullYear() === year && s.amount) {
-          revenue += parseFloat(s.amount) || 0;
-        }
-      }
-    });
-  });
-  document.getElementById('stat-revenue').textContent = revenue > 0 ? '$' + revenue.toLocaleString('es-AR') : '—';
-}
-
-// ─── DASHBOARD ────────────────────────────────────────
-function renderDashboard() {
-  // Upcoming appointments
-  const now = new Date(); now.setHours(0,0,0,0);
-  const upcoming = [];
-  Object.entries(allAppts).forEach(([cid, ca]) => {
-    Object.entries(ca).forEach(([aid, a]) => {
-      const d = new Date(a.date + 'T00:00:00');
-      if (d >= now) upcoming.push({...a, cid, aid, _d: d});
-    });
-  });
-  upcoming.sort((a,b) => a._d - b._d);
-
-  const ul = document.getElementById('upcoming-list');
-  if (upcoming.length === 0) {
-    ul.innerHTML = `<div class="empty-state" style="padding:20px"><p style="margin:0">Sin turnos próximos</p></div>`;
-  } else {
-    ul.innerHTML = upcoming.slice(0,5).map(a => {
-      const c = allClients[a.cid] || {};
-      return `<div style="display:flex; gap:12px; align-items:center; padding:8px 0; border-bottom:1px solid var(--border);">
-        <div style="background:var(--rose-pale); color:var(--rose-deep); border-radius:8px; padding:6px 10px; text-align:center; min-width:44px;">
-          <div style="font-size:18px; font-weight:700; line-height:1">${a._d.getDate()}</div>
-          <div style="font-size:10px">${a._d.toLocaleString('es-AR',{month:'short'})}</div>
-        </div>
-        <div>
-          <div style="font-size:13px; font-weight:600">${c.name || 'Cliente'}</div>
-          <div style="font-size:12px; color:var(--mid)">${a.time || ''} · ${a.treatment || 'Turno'}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  // Recent sessions
-  const sessions = [];
-  Object.entries(allSessions).forEach(([cid, cs]) => {
-    Object.entries(cs).forEach(([sid, s]) => {
-      sessions.push({...s, cid, sid});
-    });
-  });
-  sessions.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-  const rsl = document.getElementById('recent-sessions-list');
-  if (sessions.length === 0) {
-    rsl.innerHTML = `<div class="empty-state" style="padding:20px"><p style="margin:0">Sin sesiones recientes</p></div>`;
-  } else {
-    rsl.innerHTML = sessions.slice(0,5).map(s => {
-      const c = allClients[s.cid] || {};
-      const d = new Date(s.date + 'T00:00:00');
-      return `<div style="display:flex; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); cursor:pointer;" onclick="openClientDetail('${s.cid}')">
+function renderDashboard(){
+  const now=new Date();now.setHours(0,0,0,0);
+  const upcoming=[];
+  Object.entries(allAppts).forEach(([cid,ca])=>Object.entries(ca).forEach(([aid,a])=>{const d=new Date(a.date+'T00:00:00');if(d>=now)upcoming.push({...a,cid,_d:d});}));
+  upcoming.sort((a,b)=>a._d-b._d);
+  const ul=document.getElementById('upcoming-list');
+  ul.innerHTML=upcoming.length===0?`<div class="empty-state" style="padding:20px"><p style="margin:0">Sin turnos proximos</p></div>`:
+    upcoming.slice(0,5).map(a=>{const c=allClients[a.cid]||{};return`<div style="display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);">
+      <div style="background:var(--rose-pale);color:var(--rose-deep);border-radius:8px;padding:6px 10px;text-align:center;min-width:44px;">
+        <div style="font-size:18px;font-weight:700;line-height:1">${a._d.getDate()}</div>
+        <div style="font-size:10px">${a._d.toLocaleString('es-AR',{month:'short'})}</div>
+      </div>
+      <div><div style="font-size:13px;font-weight:600">${c.name||'Cliente'}</div>
+      <div style="font-size:12px;color:var(--mid)">${a.time||''} - ${a.treatment||'Turno'}</div></div>
+    </div>`;}).join('');
+  const sessions=[];
+  Object.entries(allSessions).forEach(([cid,cs])=>Object.entries(cs).forEach(([sid,s])=>sessions.push({...s,cid})));
+  sessions.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const rsl=document.getElementById('recent-sessions-list');
+  rsl.innerHTML=sessions.length===0?`<div class="empty-state" style="padding:20px"><p style="margin:0">Sin sesiones recientes</p></div>`:
+    sessions.slice(0,5).map(s=>{const c=allClients[s.cid]||{};const d=new Date(s.date+'T00:00:00');
+      return`<div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer;" onclick="openClientDetail('${s.cid}')">
         <div style="font-size:20px">🧴</div>
-        <div>
-          <div style="font-size:13px; font-weight:600">${c.name || '—'}</div>
-          <div style="font-size:12px; color:var(--mid)">${s.treatment || 'Sesión'} · ${fmtDate(d)}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
+        <div><div style="font-size:13px;font-weight:600">${c.name||'-'}</div>
+        <div style="font-size:12px;color:var(--mid)">${s.treatment||'Sesion'} - ${fmtDate(d)}</div></div>
+      </div>`;}).join('');
 }
 
-// ─── CLIENTS LIST ─────────────────────────────────────
-function renderClientsList() {
-  const tbody = document.getElementById('clients-tbody');
-  const search = (document.getElementById('client-search')?.value || '').toLowerCase();
-  const skinF = document.getElementById('skin-filter')?.value || '';
-
-  let rows = Object.entries(allClients).filter(([id, c]) => {
-    const match = !search || c.name?.toLowerCase().includes(search) || c.phone?.includes(search);
-    const skin = !skinF || c.skintype === skinF;
-    return match && skin;
+function renderClientsList(){
+  const tbody=document.getElementById('clients-tbody');
+  const search=(document.getElementById('client-search')?.value||'').toLowerCase();
+  const skinF=document.getElementById('skin-filter')?.value||'';
+  let rows=Object.entries(allClients).filter(([id,c])=>{
+    const match=!search||c.name?.toLowerCase().includes(search)||c.phone?.includes(search);
+    const skin=!skinF||c.skintype===skinF;return match&&skin;
   });
-
-  if (rows.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🌸</div><p>Sin clientes registrados</p><button class="btn btn-primary btn-sm" onclick="openNewClientModal()">+ Agregar cliente</button></div></td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = rows.map(([id, c]) => {
-    const lastSession = getLastSession(id);
-    const age = c.dob ? calcAge(c.dob) : '—';
-    const skinBadge = c.skintype ? `<span class="badge badge-${c.skintype.toLowerCase()}">${c.skintype}</span>` : '—';
-    const allergyTag = c.allergies ? `<span style="font-size:11px; color:var(--danger)">⚠️ sí</span>` : '<span style="color:var(--mid); font-size:12px">—</span>';
-    return `<tr onclick="openClientDetail('${id}')">
-      <td><strong style="font-size:13.5px">${c.name}</strong></td>
-      <td>${age}</td>
-      <td>${skinBadge}</td>
-      <td style="color:var(--mid)">${c.phone || '—'}</td>
-      <td style="color:var(--mid); font-size:12px">${lastSession}</td>
-      <td>${allergyTag}</td>
-      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); deleteClient('${id}')">🗑</button></td>
+  if(rows.length===0){tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🌸</div><p>Sin clientes registradas</p><button class="btn btn-primary btn-sm" onclick="openNewClientModal()">+ Agregar cliente</button></div></td></tr>`;return;}
+  tbody.innerHTML=rows.map(([id,c])=>{
+    const last=getLastSession(id);
+    const age=c.dob?calcAge(c.dob):'-';
+    const skinBadge=c.skintype?`<span class="badge badge-${c.skintype.toLowerCase()}">${c.skintype}</span>`:'-';
+    const cc=c.contra?Object.keys(c.contra).length:0;
+    const ct=cc>0?`<span style="font-size:11px;color:var(--danger);font-weight:600;">⚠️ ${cc}</span>`:'<span style="color:var(--mid);font-size:12px">-</span>';
+    return`<tr onclick="openClientDetail('${id}')">
+      <td><strong>${c.name}</strong></td><td>${age}</td><td>${skinBadge}</td>
+      <td style="color:var(--mid)">${c.phone||'-'}</td>
+      <td style="color:var(--mid);font-size:12px">${last}</td><td>${ct}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();deleteClient('${id}')">🗑</button></td>
     </tr>`;
   }).join('');
 }
+window.filterClients=function(){renderClientsList();};
 
-window.filterClients = function() { renderClientsList(); };
-
-function getLastSession(cid) {
-  const cs = allSessions[cid];
-  if (!cs) return '—';
-  const dates = Object.values(cs).map(s => s.date).filter(Boolean).sort().reverse();
-  if (!dates.length) return '—';
-  return fmtDate(new Date(dates[0] + 'T00:00:00'));
+function getLastSession(cid){
+  const cs=allSessions[cid];if(!cs)return'-';
+  const dates=Object.values(cs).map(s=>s.date).filter(Boolean).sort().reverse();
+  return dates.length?fmtDate(new Date(dates[0]+'T00:00:00')):'-';
+}
+function daysSince(ds){
+  if(!ds)return null;
+  const d=new Date(ds+'T00:00:00');const now=new Date();now.setHours(0,0,0,0);
+  return Math.floor((now-d)/(1000*60*60*24));
 }
 
-// ─── CLIENT DETAIL ────────────────────────────────────
-window.openClientDetail = function(id) {
-  currentClientId = id;
-  renderClientDetail();
-  showView('client-detail');
-  // Switch to first tab
-  switchDetailTab('info', document.querySelector('.detail-tab'));
-};
+window.openClientDetail=function(id){currentClientId=id;renderClientDetail();showView('client-detail');switchDetailTab('info',document.querySelector('.detail-tab'));};
 
-function renderClientDetail() {
-  const c = allClients[currentClientId];
-  if (!c) return;
+function renderClientDetail(){
+  const c=allClients[currentClientId];if(!c)return;
+  const ini=c.name?.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?';
+  document.getElementById('detail-avatar').textContent=ini;
+  document.getElementById('detail-name').textContent=c.name;
+  const age=c.dob?calcAge(c.dob)+' anos':'';
+  const sb=c.skintype?`<span class="badge badge-${c.skintype?.toLowerCase()}">${c.skintype}</span>`:'';
+  document.getElementById('detail-meta').innerHTML=`${age?`<span>🎂 ${age}</span>`:''}${sb}${c.phone?`<span>📞 ${c.phone}</span>`:''}${c.fitzpatrick?`<span>🎨 ${c.fitzpatrick}</span>`:''}${c.source?`<span>📍 ${c.source}</span>`:''}`;
 
-  // Avatar
-  const initials = c.name?.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase() || '?';
-  document.getElementById('detail-avatar').textContent = initials;
-  document.getElementById('detail-name').textContent = c.name;
-
-  const age = c.dob ? calcAge(c.dob) + ' años' : '';
-  const skinBadge = c.skintype ? `<span class="badge badge-${c.skintype?.toLowerCase()}">${c.skintype}</span>` : '';
-  document.getElementById('detail-meta').innerHTML = `
-    ${age ? `<span>🎂 ${age}</span>` : ''}
-    ${skinBadge}
-    ${c.phone ? `<span>📞 ${c.phone}</span>` : ''}
-    ${c.email ? `<span>✉️ ${c.email}</span>` : ''}
-    ${c.source ? `<span>📍 ${c.source}</span>` : ''}
-  `;
-
-  // Info panel
-  document.getElementById('detail-panel-info').innerHTML = `
+  const cc=c.contra?Object.keys(c.contra).length:0;
+  const absC=c.contra?Object.entries(c.contra).filter(([i])=>CONTRA[i]?.tipo==='abs'):[];
+  document.getElementById('detail-panel-info').innerHTML=`
     <div class="info-grid">
-      <div class="info-item"><label>Fecha de nac.</label><span>${c.dob ? new Date(c.dob+'T12:00:00').toLocaleDateString('es-AR') : '—'}</span></div>
-      <div class="info-item"><label>Tipo de piel</label><span>${c.skintype || '—'}</span></div>
-      <div class="info-item"><label>Fototipo</label><span>${c.fitzpatrick || '—'}</span></div>
+      <div class="info-item"><label>Fecha de nac.</label><span>${c.dob?new Date(c.dob+'T12:00:00').toLocaleDateString('es-AR'):'-'}</span></div>
+      <div class="info-item"><label>Tipo de piel</label><span>${c.skintype||'-'}</span></div>
+      <div class="info-item"><label>Fototipo</label><span>${c.fitzpatrick||'-'}</span></div>
+      <div class="info-item"><label>Anticonceptivos</label><span>${c.contraceptive||'-'}</span></div>
+      <div class="info-item"><label>Exposicion solar</label><span>${c.sun||'-'}</span></div>
+      <div class="info-item"><label>Protector solar</label><span>${c.sunscreen||'-'}</span></div>
     </div>
-    ${c.skinobs ? `<div style="margin-bottom:16px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Observaciones de piel</div><p style="font-size:13px">${c.skinobs}</p></div>` : ''}
-    ${c.allergies ? `<div class="alert alert-warn" style="margin-bottom:12px;">⚠️ <strong>Alergias:</strong> ${c.allergies}</div>` : ''}
-    ${c.conditions ? `<div class="alert alert-info" style="margin-bottom:12px;">🏥 <strong>Condiciones médicas:</strong> ${c.conditions}</div>` : ''}
-    ${c.notes ? `<div><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Notas generales</div><p style="font-size:13px">${c.notes}</p></div>` : ''}
+    ${absC.length>0?`<div class="alert alert-danger">🚫 <strong>Contraindicaciones absolutas:</strong> ${absC.map(([i])=>CONTRA[i].label).join(', ')}</div>`:''}
+    ${c.allergies?`<div class="alert alert-warn">⚠️ <strong>Alergias:</strong> ${c.allergies}</div>`:''}
+    ${c.conditions?`<div class="alert alert-info">🏥 <strong>Condiciones medicas:</strong> ${c.conditions}</div>`:''}
+    ${c.meds?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Medicamentos</div><p style="font-size:13px">${c.meds}</p></div>`:''}
+    ${c.goal?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Objetivo del tratamiento</div><p style="font-size:13px">${c.goal}</p></div>`:''}
+    ${c.skinobs?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Observaciones de piel</div><p style="font-size:13px">${c.skinobs}</p></div>`:''}
+    ${(c.botox&&c.botox!=='No se aplica')||c.surgery==='Si'?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Antecedentes esteticos</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        ${c.botox&&c.botox!=='No se aplica'?`<span class="badge" style="background:#EDE9FE;color:#5B21B6;">💉 Botox: ${c.botox}${c.botoxZone?' - '+c.botoxZone:''}</span>`:''}
+        ${c.surgery==='Si'?`<span class="badge" style="background:#FCE7F3;color:#9D174D;">✂️ Cx: ${c.surgeryDetail||'Si'}</span>`:''}
+      </div></div>`:''}
+    ${c.dermTxs&&c.dermTxs.length>0?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Ttos dermatologicos recientes</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">${c.dermTxs.map(t=>`<span class="badge" style="background:#FEF3C7;color:#92400E;">⚡ ${t}</span>`).join('')}</div>
+      ${c.dermDetail?`<p style="font-size:12px;color:var(--mid);margin-top:6px">${c.dermDetail}</p>`:''}
+    </div>`:''}
+    ${c.dermActive==='Si'?`<div class="alert alert-info" style="margin-bottom:12px;">🏥 <strong>En tratamiento dermatologico activo</strong>${c.dermNext?' · Proxima consulta: '+new Date(c.dermNext+'T12:00:00').toLocaleDateString('es-AR'):''}${c.dermRx?'<br><span style="font-size:12px">Rx: '+c.dermRx+'</span>':''}</div>`:''}
+    ${c.skincareItems&&c.skincareItems.length>0?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Rutina skincare actual</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;">${c.skincareItems.map(s=>`<span class="badge" style="background:var(--sage-light);color:var(--sage);">🧴 ${s}</span>`).join('')}</div>
+      ${c.skincareDetail?`<p style="font-size:12px;color:var(--mid);margin-top:6px">${c.skincareDetail}</p>`:''}
+      ${c.sunscreen?`<p style="font-size:12px;margin-top:4px">Protector solar: <strong>${c.sunscreen}</strong>${c.spf?' ('+c.spf+')':''}</p>`:''}
+    </div>`:''}
+    ${cc>0&&absC.length===0?`<div style="margin-bottom:12px;"><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Contraindicaciones relativas (${cc})</div><div style="display:flex;flex-wrap:wrap;gap:4px;">${Object.keys(c.contra).map(i=>`<span class="badge" style="background:#FEF3C7;color:#92400E">${CONTRA[i]?.label||''}</span>`).join('')}</div></div>`:''}
+    ${c.notes?`<div><div style="font-size:11px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Notas generales</div><p style="font-size:13px">${c.notes}</p></div>`:''}
   `;
 
-  // Sessions panel
-  const cs = allSessions[currentClientId] || {};
-  const sessionList = Object.entries(cs).sort((a,b)=>b[1].date?.localeCompare(a[1].date||'')||0);
-  if (sessionList.length === 0) {
-    document.getElementById('detail-panel-sessions').innerHTML = `
-      <div class="empty-state"><div class="empty-icon">🧴</div><p>Sin sesiones registradas</p>
-      <button class="btn btn-primary btn-sm" onclick="openNewSessionModal()">+ Registrar primera sesión</button></div>`;
+  const cs=allSessions[currentClientId]||{};
+  const sessionList=Object.entries(cs).sort((a,b)=>b[1].date?.localeCompare(a[1].date||'')||0);
+  const total=sessionList.length;
+  if(total===0){
+    document.getElementById('detail-panel-sessions').innerHTML=`<div class="empty-state"><div class="empty-icon">🧴</div><p>Sin sesiones registradas</p><button class="btn btn-primary btn-sm" onclick="openNewSessionModal()">+ Registrar primera sesion</button></div>`;
   } else {
-    document.getElementById('detail-panel-sessions').innerHTML = sessionList.map(([sid, s]) => {
-      const prods = (s.products || '').split('\n').filter(Boolean);
-      return `<div class="session-card">
+    const lastDate=sessionList[0][1].date;
+    const da=daysSince(lastDate);
+    const dm=da===0?'hoy':da===1?'hace 1 dia':`hace ${da} dias`;
+    let html=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div style="font-size:13px;color:var(--mid)">Total: <strong style="color:var(--charcoal)">${total} sesiones</strong></div>
+      <div style="font-size:12px;color:var(--rose-deep);background:var(--rose-pale);padding:4px 12px;border-radius:20px;">Ultima sesion: ${dm}</div>
+    </div><div class="timeline">`;
+    sessionList.forEach(([sid,s],idx)=>{
+      const num=total-idx;
+      const prods=(s.products||'').split('\n').filter(Boolean);
+      const dias=daysSince(s.date);
+      const dstr=dias===0?'hoy':dias===1?'hace 1 dia':`hace ${dias} dias`;
+      const hall=s.hallazgos||[];
+      html+=`<div class="timeline-item"><div class="timeline-dot"></div><div class="session-card">
         <div class="session-header">
-          <span class="session-date">📅 ${s.date ? fmtDate(new Date(s.date+'T12:00:00')) : '—'}</span>
-          <div style="display:flex;gap:6px;">
-            <button class="btn btn-ghost btn-sm" onclick="deleteSession('${sid}')">🗑</button>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="session-num">Sesion ${num}</span>
+            <span class="session-date">📅 ${s.date?fmtDate(new Date(s.date+'T12:00:00')):'-'}</span>
+            <span class="session-days-ago">${dstr}</span>
           </div>
+          <button class="btn btn-ghost btn-sm" onclick="deleteSession('${sid}')">🗑</button>
         </div>
-        <div class="session-treatment">${s.treatment || '—'}</div>
-        ${prods.length ? `<div class="session-field"><label>Productos</label><span>${prods.map(p=>`<span class="product-tag">${p}</span>`).join('')}</span></div>` : ''}
-        ${s.reaction ? `<div class="session-field"><label>Reacción</label><span>${s.reaction}</span></div>` : ''}
-        ${s.next ? `<div class="session-field"><label>Próximo paso</label><span>${s.next}</span></div>` : ''}
-        ${s.amount ? `<div class="session-field"><label>Pago</label><span>$${parseFloat(s.amount).toLocaleString('es-AR')} · ${s.paymethod || ''} · <span class="badge payment-badge-${(s.paystatus||'').toLowerCase()}">${s.paystatus||'—'}</span></span></div>` : ''}
-      </div>`;
-    }).join('');
+        <div class="session-treatment">${s.treatment||'-'}</div>
+        ${s.zone||s.ciclo?`<div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+          ${s.zone?`<span style="font-size:11px;background:var(--cream);border:1px solid var(--border);padding:2px 8px;border-radius:20px;">📍 ${s.zone}</span>`:''}
+          ${s.ciclo?`<span class="ciclo-badge">🔄 ${s.ciclo}</span>`:''}
+        </div>`:''}
+        <hr class="session-divider">
+        ${prods.length?`<div class="session-field"><label>Productos</label><span>${prods.map(p=>`<span class="product-tag">${p}</span>`).join('')}</span></div>`:''}
+        ${s.hidratacion||s.seborrea||s.tono?`<div class="session-field"><label>Evaluacion</label><span class="skin-chips">
+          ${s.hidratacion?`<span class="skin-chip chip-info">💧 ${s.hidratacion}</span>`:''}
+          ${s.seborrea?`<span class="skin-chip chip-info">🫧 Seborrea ${s.seborrea}</span>`:''}
+          ${s.tono?`<span class="skin-chip chip-info">✨ ${s.tono}</span>`:''}
+          ${s.sensibilidad?`<span class="skin-chip ${parseInt(s.sensibilidad)>=4?'chip-warn':'chip-ok'}">Sensib. ${s.sensibilidad}/5</span>`:''}
+        </span></div>`:''}
+        ${hall.length?`<div class="session-field"><label>Hallazgos</label><span class="skin-chips">${hall.map(h=>`<span class="skin-chip chip-warn">${h}</span>`).join('')}</span></div>`:''}
+        ${s.reaction?`<div class="session-field"><label>Reaccion</label><span>${s.reaction}</span></div>`:''}
+        ${s.homecare?`<div class="session-field"><label>Rutina recomendada</label><span>${s.homecare}</span></div>`:''}
+        ${s.next?`<div class="session-field"><label>Proximo paso</label><span>${s.next}</span></div>`:''}
+        ${s.amount?`<hr class="session-divider"><div class="session-field"><label>Pago</label><span>$${parseFloat(s.amount).toLocaleString('es-AR')} - ${s.paymethod||''} - <span class="badge payment-badge-${(s.paystatus||'').toLowerCase()}">${s.paystatus||'-'}</span></span></div>`:''}
+      </div></div>`;
+    });
+    html+='</div>';
+    document.getElementById('detail-panel-sessions').innerHTML=html;
   }
 
-  // Payments panel
-  const payments = sessionList.filter(([,s])=>s.amount);
-  const total = payments.reduce((sum,[,s])=>sum+(parseFloat(s.amount)||0),0);
-  const pagados = payments.filter(([,s])=>s.paystatus==='Pagado').reduce((sum,[,s])=>sum+(parseFloat(s.amount)||0),0);
-  const pend = total - pagados;
-  document.getElementById('detail-panel-payments').innerHTML = `
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px;">
-      <div class="stat-card"><div class="stat-label">Total facturado</div><div class="stat-value" style="font-size:22px;">$${total.toLocaleString('es-AR')}</div></div>
-      <div class="stat-card"><div class="stat-label">Cobrado</div><div class="stat-value" style="font-size:22px; color:var(--success);">$${pagados.toLocaleString('es-AR')}</div></div>
-      <div class="stat-card"><div class="stat-label">Pendiente</div><div class="stat-value" style="font-size:22px; color:var(--gold);">$${pend.toLocaleString('es-AR')}</div></div>
+  const payments=sessionList.filter(([,s])=>s.amount);
+  const ptotal=payments.reduce((sum,[,s])=>sum+(parseFloat(s.amount)||0),0);
+  const ppag=payments.filter(([,s])=>s.paystatus==='Pagado').reduce((sum,[,s])=>sum+(parseFloat(s.amount)||0),0);
+  const ppend=ptotal-ppag;
+  document.getElementById('detail-panel-payments').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
+      <div class="stat-card"><div class="stat-label">Total facturado</div><div class="stat-value" style="font-size:22px;">$${ptotal.toLocaleString('es-AR')}</div></div>
+      <div class="stat-card"><div class="stat-label">Cobrado</div><div class="stat-value" style="font-size:22px;color:var(--success);">$${ppag.toLocaleString('es-AR')}</div></div>
+      <div class="stat-card"><div class="stat-label">Pendiente</div><div class="stat-value" style="font-size:22px;color:var(--gold);">$${ppend.toLocaleString('es-AR')}</div></div>
     </div>
-    ${payments.length === 0 ? `<div class="empty-state"><p>Sin pagos registrados</p></div>` :
-    `<div class="card" style="padding:0; overflow:hidden;"><table>
-      <thead><tr><th>Fecha</th><th>Tratamiento</th><th>Monto</th><th>Medio</th><th>Estado</th></tr></thead>
-      <tbody>
-        ${payments.map(([sid,s])=>`<tr>
-          <td style="color:var(--mid); font-size:12px">${s.date ? fmtDate(new Date(s.date+'T12:00:00')) : '—'}</td>
-          <td>${s.treatment||'—'}</td>
-          <td style="font-weight:600">$${parseFloat(s.amount).toLocaleString('es-AR')}</td>
-          <td style="color:var(--mid)">${s.paymethod||'—'}</td>
-          <td><span class="badge payment-badge-${(s.paystatus||'').toLowerCase()}">${s.paystatus||'—'}</span></td>
-        </tr>`).join('')}
-      </tbody>
+    ${payments.length===0?`<div class="empty-state"><p>Sin pagos registrados</p></div>`:`
+    <div class="card" style="padding:0;overflow:hidden;"><table>
+      <thead><tr><th>Sesion</th><th>Fecha</th><th>Tratamiento</th><th>Monto</th><th>Medio</th><th>Estado</th></tr></thead>
+      <tbody>${payments.map(([sid,s],i)=>`<tr>
+        <td style="font-weight:600;color:var(--rose-deep)">#${payments.length-i}</td>
+        <td style="color:var(--mid);font-size:12px">${s.date?fmtDate(new Date(s.date+'T12:00:00')):'-'}</td>
+        <td>${s.treatment||'-'}</td>
+        <td style="font-weight:600">$${parseFloat(s.amount).toLocaleString('es-AR')}</td>
+        <td style="color:var(--mid)">${s.paymethod||'-'}</td>
+        <td><span class="badge payment-badge-${(s.paystatus||'').toLowerCase()}">${s.paystatus||'-'}</span></td>
+      </tr>`).join('')}</tbody>
     </table></div>`}
   `;
 }
 
-window.switchDetailTab = function(tab, el) {
+window.switchDetailTab=function(tab,el){
   document.querySelectorAll('.detail-tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.detail-panel').forEach(p=>p.classList.remove('active'));
-  if (el) el.classList.add('active');
-  const panel = document.getElementById('detail-panel-' + tab);
-  if (panel) panel.classList.add('active');
+  if(el)el.classList.add('active');
+  const p=document.getElementById('detail-panel-'+tab);if(p)p.classList.add('active');
 };
 
-// ─── MODALS ───────────────────────────────────────────
-window.openNewClientModal = function() {
-  editingClientId = null;
-  document.getElementById('modal-client-title').textContent = 'Nueva cliente';
-  ['c-name','c-dob','c-phone','c-email','c-source','c-skintype','c-fitzpatrick',
-   'c-skinobs','c-allergies','c-conditions','c-notes'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
+window.openNewClientModal=function(){
+  editingClientId=null;
+  document.getElementById('modal-client-title').textContent='Nueva cliente';
+  ['c-name','c-dob','c-phone','c-email','c-source','c-skintype','c-fitzpatrick','c-skinobs',
+   'c-meds','c-contraceptive','c-sun','c-sunscreen','c-spf','c-goal','c-conditions','c-allergies','c-notes',
+   'c-botox','c-botox-zone','c-surgery','c-surgery-detail','c-derm-detail',
+   'c-derm-active','c-derm-next','c-derm-rx','c-skincare-detail']
+    .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  buildContraGrid('c-contra-grid',{});
+  buildDtxGrid([]);buildSkGrid([]);
   openModal('modal-client');
 };
-
-window.openEditClientModal = function() {
-  const c = allClients[currentClientId];
-  if (!c) return;
-  editingClientId = currentClientId;
-  document.getElementById('modal-client-title').textContent = 'Editar cliente';
-  document.getElementById('c-name').value = c.name||'';
-  document.getElementById('c-dob').value = c.dob||'';
-  document.getElementById('c-phone').value = c.phone||'';
-  document.getElementById('c-email').value = c.email||'';
-  document.getElementById('c-source').value = c.source||'';
-  document.getElementById('c-skintype').value = c.skintype||'';
-  document.getElementById('c-fitzpatrick').value = c.fitzpatrick||'';
-  document.getElementById('c-skinobs').value = c.skinobs||'';
-  document.getElementById('c-allergies').value = c.allergies||'';
-  document.getElementById('c-conditions').value = c.conditions||'';
-  document.getElementById('c-notes').value = c.notes||'';
+window.openEditClientModal=function(){
+  const c=allClients[currentClientId];if(!c)return;
+  editingClientId=currentClientId;
+  document.getElementById('modal-client-title').textContent='Editar cliente';
+  const f={'c-name':c.name,'c-dob':c.dob,'c-phone':c.phone,'c-email':c.email,'c-source':c.source,
+    'c-skintype':c.skintype,'c-fitzpatrick':c.fitzpatrick,'c-skinobs':c.skinobs,
+    'c-meds':c.meds,'c-contraceptive':c.contraceptive,'c-sun':c.sun,'c-sunscreen':c.sunscreen,'c-spf':c.spf,
+    'c-goal':c.goal,'c-conditions':c.conditions,'c-allergies':c.allergies,'c-notes':c.notes,
+    'c-botox':c.botox,'c-botox-zone':c.botoxZone,'c-surgery':c.surgery,'c-surgery-detail':c.surgeryDetail,
+    'c-derm-detail':c.dermDetail,'c-derm-active':c.dermActive,'c-derm-next':c.dermNext,'c-derm-rx':c.dermRx,
+    'c-skincare-detail':c.skincareDetail};
+  Object.entries(f).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.value=val||'';});
+  buildContraGrid('c-contra-grid',c.contra||{});
+  buildDtxGrid(c.dermTxs||[]);buildSkGrid(c.skincareItems||[]);
   openModal('modal-client');
 };
-
-window.saveClient = async function() {
-  const name = v('c-name').trim();
-  if (!name) { toast('El nombre es obligatorio'); return; }
-  const data = {
-    name, dob:v('c-dob'), phone:v('c-phone'), email:v('c-email'),
-    source:v('c-source'), skintype:v('c-skintype'), fitzpatrick:v('c-fitzpatrick'),
-    skinobs:v('c-skinobs'), allergies:v('c-allergies'),
-    conditions:v('c-conditions'), notes:v('c-notes'),
-    createdAt: editingClientId ? (allClients[editingClientId]?.createdAt || Date.now()) : Date.now()
-  };
-  const path = editingClientId ? `clients/${editingClientId}` : `clients/${push(ref(db,'clients')).key}`;
-  await set(ref(db, path), data);
-  closeModal('modal-client');
-  toast(editingClientId ? 'Cliente actualizado ✓' : 'Cliente registrado ✓');
-  editingClientId = null;
+window.saveClient=async function(){
+  const name=v('c-name').trim();if(!name){toast('El nombre es obligatorio');return;}
+  const data={name,dob:v('c-dob'),phone:v('c-phone'),email:v('c-email'),source:v('c-source'),
+    skintype:v('c-skintype'),fitzpatrick:v('c-fitzpatrick'),skinobs:v('c-skinobs'),
+    meds:v('c-meds'),contraceptive:v('c-contraceptive'),sun:v('c-sun'),sunscreen:v('c-sunscreen'),spf:v('c-spf'),
+    goal:v('c-goal'),conditions:v('c-conditions'),
+    allergies:v('c-allergies'),notes:v('c-notes'),contra:getContraVals('c-contra-grid'),
+    botox:v('c-botox'),botoxZone:v('c-botox-zone'),
+    surgery:v('c-surgery'),surgeryDetail:v('c-surgery-detail'),
+    dermTxs:getDtxVals(),dermDetail:v('c-derm-detail'),
+    dermActive:v('c-derm-active'),dermNext:v('c-derm-next'),dermRx:v('c-derm-rx'),
+    skincareItems:getSkVals(),skincareDetail:v('c-skincare-detail'),
+    createdAt:editingClientId?(allClients[editingClientId]?.createdAt||Date.now()):Date.now()};
+  const path=editingClientId?`clients/${editingClientId}`:`clients/${push(ref(db,'clients')).key}`;
+  await set(ref(db,path),data);
+  closeModal('modal-client');toast(editingClientId?'Cliente actualizada':'Cliente registrada');editingClientId=null;
 };
-
-window.deleteClient = async function(id) {
-  if (!confirm('¿Eliminar esta cliente y todos sus datos?')) return;
-  await remove(ref(db, `clients/${id}`));
-  await remove(ref(db, `sessions/${id}`));
-  await remove(ref(db, `appointments/${id}`));
-  toast('Cliente eliminado');
+window.deleteClient=async function(id){
+  if(!confirm('Eliminar esta cliente y todos sus datos?'))return;
+  await remove(ref(db,'clients/'+id));await remove(ref(db,'sessions/'+id));await remove(ref(db,'appointments/'+id));
+  toast('Cliente eliminada');
 };
-
-window.openNewSessionModal = function() {
-  document.getElementById('s-date').value = toLocalISO(new Date());
-  ['s-treatment','s-products','s-reaction','s-next','s-amount','s-paymethod'].forEach(id=>{
-    const el=document.getElementById(id); if(el) el.value='';
-  });
-  document.getElementById('s-paystatus').value = 'Pagado';
-  openModal('modal-session');
+window.openNewSessionModal=function(){
+  document.getElementById('s-date').value=toLocalISO(new Date());
+  ['s-treatment','s-zone','s-ciclo','s-products','s-homecare','s-reaction','s-next','s-amount','s-paymethod','s-hidratacion','s-seborrea','s-tono'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('s-paystatus').value='Pagado';
+  document.getElementById('s-sensibilidad').value=2;
+  document.getElementById('s-sens-val').textContent=2;
+  buildHallazgos();openModal('modal-session');
 };
-
-window.saveSession = async function() {
-  if (!currentClientId) return;
-  const data = {
-    date: v('s-date'), treatment: v('s-treatment'),
-    products: v('s-products'), reaction: v('s-reaction'),
-    next: v('s-next'), amount: v('s-amount'),
-    paymethod: v('s-paymethod'), paystatus: v('s-paystatus'),
-    createdAt: Date.now()
-  };
-  if (!data.date || !data.treatment) { toast('Fecha y tratamiento son obligatorios'); return; }
-  const newKey = push(ref(db, `sessions/${currentClientId}`)).key;
-  await set(ref(db, `sessions/${currentClientId}/${newKey}`), data);
-  closeModal('modal-session');
-  toast('Sesión guardada ✓');
+window.saveSession=async function(){
+  if(!currentClientId)return;
+  const data={date:v('s-date'),treatment:v('s-treatment'),zone:v('s-zone'),ciclo:v('s-ciclo'),
+    products:v('s-products'),homecare:v('s-homecare'),reaction:v('s-reaction'),next:v('s-next'),
+    hidratacion:v('s-hidratacion'),seborrea:v('s-seborrea'),tono:v('s-tono'),
+    sensibilidad:document.getElementById('s-sensibilidad')?.value||'',
+    hallazgos:getHallazgos(),amount:v('s-amount'),paymethod:v('s-paymethod'),paystatus:v('s-paystatus'),createdAt:Date.now()};
+  if(!data.date||!data.treatment){toast('Fecha y tratamiento son obligatorios');return;}
+  const key=push(ref(db,'sessions/'+currentClientId)).key;
+  await set(ref(db,'sessions/'+currentClientId+'/'+key),data);
+  closeModal('modal-session');toast('Sesion guardada');
 };
-
-window.deleteSession = async function(sid) {
-  if (!confirm('¿Eliminar esta sesión?')) return;
-  await remove(ref(db, `sessions/${currentClientId}/${sid}`));
-  toast('Sesión eliminada');
+window.deleteSession=async function(sid){
+  if(!confirm('Eliminar esta sesion?'))return;
+  await remove(ref(db,'sessions/'+currentClientId+'/'+sid));toast('Sesion eliminada');
 };
-
-window.openNewApptModal = function(prefillCid) {
-  editingApptId = null;
-  document.getElementById('modal-appt-title').textContent = 'Nuevo turno';
-  document.getElementById('a-date').value = toLocalISO(new Date());
-  document.getElementById('a-time').value = '10:00';
-  document.getElementById('a-duration').value = '60';
-  document.getElementById('a-status').value = 'Confirmado';
-  document.getElementById('a-treatment').value = '';
-  document.getElementById('a-notes').value = '';
-  // Fill client select
-  const sel = document.getElementById('a-client');
-  sel.innerHTML = Object.entries(allClients).map(([id,c])=>
-    `<option value="${id}" ${id === (prefillCid||currentClientId) ? 'selected':''}>${c.name}</option>`
-  ).join('');
+window.openNewApptModal=function(){
+  document.getElementById('a-date').value=toLocalISO(new Date());
+  document.getElementById('a-time').value='10:00';
+  document.getElementById('a-duration').value='60';
+  document.getElementById('a-status').value='Confirmado';
+  document.getElementById('a-treatment').value='';
+  document.getElementById('a-notes').value='';
+  const sel=document.getElementById('a-client');
+  sel.innerHTML=Object.entries(allClients).map(([id,c])=>`<option value="${id}" ${id===currentClientId?'selected':''}>${c.name}</option>`).join('');
   openModal('modal-appt');
 };
-
-window.saveAppt = async function() {
-  const cid = v('a-client');
-  const date = v('a-date');
-  if (!cid || !date) { toast('Cliente y fecha son obligatorios'); return; }
-  const data = {
-    clientId: cid, date, time: v('a-time'),
-    duration: v('a-duration'), treatment: v('a-treatment'),
-    status: v('a-status'), notes: v('a-notes'),
-    createdAt: Date.now()
-  };
-  const key = editingApptId || push(ref(db, `appointments/${cid}`)).key;
-  await set(ref(db, `appointments/${cid}/${key}`), data);
-  closeModal('modal-appt');
-  toast('Turno guardado ✓');
+window.saveAppt=async function(){
+  const cid=v('a-client');const date=v('a-date');
+  if(!cid||!date){toast('Cliente y fecha son obligatorios');return;}
+  const data={clientId:cid,date,time:v('a-time'),duration:v('a-duration'),treatment:v('a-treatment'),status:v('a-status'),notes:v('a-notes'),createdAt:Date.now()};
+  const key=push(ref(db,'appointments/'+cid)).key;
+  await set(ref(db,'appointments/'+cid+'/'+key),data);
+  closeModal('modal-appt');toast('Turno guardado');
 };
-
-// ─── AGENDA ───────────────────────────────────────────
-window.changeWeek = function(delta) {
-  if (delta === 0) currentWeekOffset = 0;
-  else currentWeekOffset += delta;
-  renderWeek();
+window.changeWeek=function(delta){if(delta===0)currentWeekOffset=0;else currentWeekOffset+=delta;renderWeek();};
+function renderWeek(){
+  const today=new Date();today.setHours(0,0,0,0);
+  const monday=new Date(today);monday.setDate(today.getDate()-((today.getDay()+6)%7)+currentWeekOffset*7);
+  const days=Array.from({length:7},(_,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);return d;});
+  const label=`${days[0].toLocaleDateString('es-AR',{day:'numeric',month:'long'})} - ${days[6].toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'})}`;
+  document.getElementById('week-label').textContent=label;
+  const dn=['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+  const hours=Array.from({length:13},(_,i)=>i+8);
+  const abh={};
+  Object.entries(allAppts).forEach(([cid,ca])=>Object.entries(ca).forEach(([aid,a])=>{
+    const d=new Date(a.date+'T00:00:00');
+    days.forEach((day,di)=>{if(d.toDateString()===day.toDateString()){
+      const h=parseInt((a.time||'09:00').split(':')[0]);const key=di+'-'+h;
+      if(!abh[key])abh[key]=[];abh[key].push({...a,cid});
+    }});
+  }));
+  document.getElementById('week-grid-container').innerHTML=`<div class="week-grid">
+    <div class="week-header time-col"></div>
+    ${days.map((d,i)=>{const it=d.toDateString()===today.toDateString();return`<div class="week-header ${it?'today':''}"><div>${dn[i]}</div><div style="font-size:18px;font-weight:700;margin-top:2px">${d.getDate()}</div></div>`;}).join('')}
+    ${hours.map(h=>`<div class="time-label">${h}:00</div>${days.map((d,di)=>{
+      const key=di+'-'+h;const appts=abh[key]||[];
+      return`<div class="time-slot" onclick="openNewApptModal()" style="cursor:pointer;">${appts.map(a=>{const c=allClients[a.cid]||{};return`<div class="appt-block"><div style="font-weight:600">${a.time||''}</div><div style="opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.name||'Cliente'}</div><div style="font-size:10px;opacity:.8">${a.treatment||''}</div></div>`;}).join('')}</div>`;
+    }).join('')}`).join('')}
+  </div>`;
+}
+window.saveClinicName=function(){
+  const name=document.getElementById('settings-clinic-name').value.trim();
+  const cfg=getStoredConfig();cfg.clinicName=name;
+  localStorage.setItem('cosmetologia_config',JSON.stringify(cfg));
+  document.getElementById('clinic-name-display').textContent=name||'Consultorio';
+  toast('Nombre guardado');
 };
-
-function renderWeek() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7) + currentWeekOffset * 7);
-
-  const days = Array.from({length:7}, (_,i) => {
-    const d = new Date(monday); d.setDate(monday.getDate() + i); return d;
-  });
-
-  const label = `${days[0].toLocaleDateString('es-AR',{day:'numeric',month:'long'})} — ${days[6].toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'})}`;
-  document.getElementById('week-label').textContent = label;
-
-  const dayNames = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-  const hours = Array.from({length:13}, (_,i) => i + 8); // 8 to 20
-
-  // Collect appointments for this week
-  const apptsByDayHour = {};
-  Object.entries(allAppts).forEach(([cid, ca]) => {
-    Object.entries(ca).forEach(([aid, a]) => {
-      const d = new Date(a.date + 'T00:00:00');
-      days.forEach((day, di) => {
-        if (d.toDateString() === day.toDateString()) {
-          const h = parseInt((a.time||'09:00').split(':')[0]);
-          const key = `${di}-${h}`;
-          if (!apptsByDayHour[key]) apptsByDayHour[key] = [];
-          apptsByDayHour[key].push({...a, cid, aid});
-        }
-      });
-    });
-  });
-
-  const container = document.getElementById('week-grid-container');
-  container.innerHTML = `
-    <div class="week-grid">
-      <div class="week-header time-col"></div>
-      ${days.map((d,i) => {
-        const isToday = d.toDateString() === today.toDateString();
-        return `<div class="week-header ${isToday?'today':''}">
-          <div>${dayNames[i]}</div>
-          <div style="font-size:18px; font-weight:700; margin-top:2px">${d.getDate()}</div>
-        </div>`;
-      }).join('')}
-      ${hours.map(h => `
-        <div class="time-label">${h}:00</div>
-        ${days.map((d,di) => {
-          const key = `${di}-${h}`;
-          const appts = apptsByDayHour[key] || [];
-          return `<div class="time-slot" onclick="openNewApptModal()" style="cursor:pointer;">
-            ${appts.map(a => {
-              const c = allClients[a.cid] || {};
-              return `<div class="appt-block" onclick="event.stopPropagation()" title="${c.name||''} · ${a.treatment||''}">
-                <div class="appt-time">${a.time||''}</div>
-                <div class="appt-name">${c.name||'Cliente'}</div>
-                <div class="appt-name" style="font-size:10px; opacity:.8">${a.treatment||''}</div>
-              </div>`;
-            }).join('')}
-          </div>`;
-        }).join('')}
-      `).join('')}
-    </div>
-  `;
-}
-
-// ─── SETTINGS ─────────────────────────────────────────
-window.saveClinicName = async function() {
-  const name = document.getElementById('settings-clinic-name').value.trim();
-  const cfg = getStoredConfig();
-  cfg.clinicName = name;
-  localStorage.setItem('cosmetologia_config', JSON.stringify(cfg));
-  document.getElementById('clinic-name-display').textContent = name || 'Consultorio';
-  toast('Nombre guardado ✓');
+window.resetConfig=function(){if(confirm('Cambiar configuracion Firebase?')){localStorage.removeItem('cosmetologia_config');location.reload();}};
+window.exportData=function(){
+  const data={clients:allClients,sessions:allSessions,appointments:allAppts};
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
+  a.download='cosmetologia-backup.json';a.click();toast('Exportacion descargada');
 };
-
-window.resetConfig = function() {
-  if (confirm('¿Cambiar configuración Firebase? Perderás la conexión actual.')) {
-    localStorage.removeItem('cosmetologia_config');
-    location.reload();
-  }
-};
-
-window.exportData = function() {
-  const data = { clients: allClients, sessions: allSessions, appointments: allAppts };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'cosmetologia-backup.json';
-  a.click();
-  toast('Exportación descargada ✓');
-};
-
-// ─── HELPERS ──────────────────────────────────────────
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-window.closeModal = function(id) { document.getElementById(id).classList.remove('open'); };
-
-function v(id) {
-  const el = document.getElementById(id);
-  return el ? el.value : '';
-}
-
-function calcAge(dob) {
-  const today = new Date();
-  const birth = new Date(dob + 'T12:00:00');
-  let age = today.getFullYear() - birth.getFullYear();
-  const m = today.getMonth() - birth.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-  return age;
-}
-
-function fmtDate(d) {
-  return d.toLocaleDateString('es-AR', {day:'numeric', month:'short', year:'numeric'});
-}
-
-function toLocalISO(d) {
-  return d.toISOString().slice(0,10);
-}
-
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
-
-// ─── START ────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');}
+window.closeModal=function(id){document.getElementById(id).classList.remove('open');};
+function v(id){const el=document.getElementById(id);return el?el.value:'';}
+function calcAge(dob){const t=new Date(),b=new Date(dob+'T12:00:00');let a=t.getFullYear()-b.getFullYear();const m=t.getMonth()-b.getMonth();if(m<0||(m===0&&t.getDate()<b.getDate()))a--;return a;}
+function fmtDate(d){return d.toLocaleDateString('es-AR',{day:'numeric',month:'short',year:'numeric'});}
+function toLocalISO(d){return d.toISOString().slice(0,10);}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
 init();
 </script>
 </body>
