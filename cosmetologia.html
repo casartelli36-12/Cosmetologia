@@ -562,7 +562,7 @@ const FIREBASE_CONFIG={apiKey:"AIzaSyD9wL8wD1rQjLnvHbXq-J9zVXCzU1piEuk",authDoma
 const APP_PASSWORD='Vicky2026';
 const AUTH_KEY='cosmetologia_auth_ok_v1';
 
-function tryAuthLogin(){
+window.tryAuthLogin=function(){
   const input=document.getElementById('authPassInput');
   const err=document.getElementById('authError');
   if(input.value===APP_PASSWORD){
