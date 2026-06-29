@@ -14,7 +14,11 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cream);color:var(--charcoal);min-height:100vh;}
-  #sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--warm-white);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;}
+  #sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--warm-white);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .2s;}
+  #sidebar.collapsed{transform:translateX(-220px);}
+  #main.expanded{margin-left:0;}
+  #sidebar-toggle{position:fixed;top:14px;left:14px;z-index:101;width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--warm-white);color:var(--rose-deep);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:left .2s;}
+  #sidebar-toggle.shifted{left:234px;}
   .sidebar-logo{padding:24px 20px 18px;border-bottom:1px solid var(--border);}
   .sidebar-logo .logo-icon{font-size:22px;margin-bottom:4px;}
   .sidebar-logo h1{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--rose-deep);text-transform:uppercase;}
@@ -159,9 +163,29 @@
   #toast.show{transform:translateY(0);opacity:1;}
   ::-webkit-scrollbar{width:6px;height:6px;}
   ::-webkit-scrollbar-thumb{background:var(--rose-light);border-radius:3px;}
+  .auth-gate{position:fixed;inset:0;background:var(--rose-deep);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px;}
+  .auth-gate-card{background:#fff;border-radius:14px;padding:32px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3);}
+  .auth-gate-logo{font-size:34px;margin-bottom:6px;}
+  .auth-gate-card h2{font-size:16px;color:var(--rose-deep);margin-bottom:6px;}
+  .auth-gate-card p{font-size:13px;color:var(--mid);margin-bottom:18px;}
+  .auth-gate-card input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-size:15px;font-family:inherit;outline:none;text-align:center;margin-bottom:10px;}
+  .auth-gate-card input:focus{border-color:var(--rose-light);}
+  .auth-gate-card button{width:100%;padding:11px;background:var(--rose);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;}
+  .auth-gate-error{display:none;color:var(--danger);font-size:12px;margin-bottom:10px;}
 </style>
 </head>
 <body>
+<div id="authGate" class="auth-gate">
+  <form class="auth-gate-card" onsubmit="event.preventDefault();tryAuthLogin();">
+    <div class="auth-gate-logo">🌸</div>
+    <h2>Cosmetologia</h2>
+    <p>Ingresá la contraseña para acceder.</p>
+    <input type="password" id="authPassInput" placeholder="Contraseña" autocomplete="off">
+    <div id="authError" class="auth-gate-error">Contraseña incorrecta. Probá de nuevo.</div>
+    <button type="submit">Entrar</button>
+  </form>
+</div>
+<button id="sidebar-toggle" onclick="toggleSidebar()" title="Mostrar/ocultar menu">☰</button>
 <div id="sidebar">
   <div class="sidebar-logo">
     <div class="logo-icon">🌸</div>
@@ -182,27 +206,7 @@
     <div class="header-actions" id="header-actions"></div>
   </header>
   <div class="content">
-    <div id="view-setup" class="view active">
-      <div class="config-section">
-        <div class="logo">🌸</div>
-        <h2>Configurar Firebase</h2>
-        <p>Ingresa los datos de tu proyecto Firebase para conectar la base de datos.</p>
-        <div class="card">
-          <div class="form-section-title">🔥 Firebase Config</div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div class="form-group"><label>API Key</label><input type="text" id="cfg-apiKey" placeholder="AIzaSy..."></div>
-            <div class="form-group"><label>Auth Domain</label><input type="text" id="cfg-authDomain" placeholder="mi-proyecto.firebaseapp.com"></div>
-            <div class="form-group"><label>Database URL</label><input type="text" id="cfg-databaseURL" placeholder="https://mi-proyecto-default-rtdb.firebaseio.com"></div>
-            <div class="form-group"><label>Project ID</label><input type="text" id="cfg-projectId" placeholder="mi-proyecto"></div>
-            <div class="form-group"><label>App Bucket</label><input type="text" id="cfg-storageBucket" placeholder="mi-proyecto.appspot.com"></div>
-            <div class="form-group"><label>Messaging Sender ID</label><input type="text" id="cfg-messagingSenderId" placeholder="123456789"></div>
-            <div class="form-group"><label>App ID</label><input type="text" id="cfg-appId" placeholder="1:123..."></div>
-            <div class="form-group"><label>Nombre del Consultorio</label><input type="text" id="cfg-clinicName" placeholder="Ej: Studio Piel"></div>
-            <button class="btn btn-primary" onclick="saveConfig()" style="margin-top:8px;">Conectar y guardar</button>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div id="view-dashboard" class="view">
       <div class="stats-row">
         <div class="stat-card"><div class="stat-label">Clientes</div><div class="stat-value" id="stat-clients">-</div><div class="stat-sub">registradas</div></div>
@@ -271,11 +275,6 @@
           <button class="btn btn-primary btn-sm" onclick="saveClinicName()">Guardar</button>
         </div>
         <div class="card" style="margin-bottom:20px;">
-          <div class="card-title">🔥 Reconectar Firebase</div>
-          <p style="font-size:13px;color:var(--mid);margin-bottom:12px;">Cambia la base de datos conectada.</p>
-          <button class="btn btn-ghost btn-sm" onclick="resetConfig()">Cambiar configuracion Firebase</button>
-        </div>
-        <div class="card">
           <div class="card-title">📤 Exportar datos</div>
           <button class="btn btn-secondary btn-sm" onclick="exportData()">Exportar JSON</button>
         </div>
@@ -545,29 +544,58 @@ function buildHallazgos(){
 window.toggleHallazgo=function(i,el){document.getElementById('hg-'+i).classList.toggle('selected',el.checked);};
 function getHallazgos(){return HALLAZGOS.filter((_,i)=>{const cb=document.querySelector('#hg-'+i+' input');return cb&&cb.checked;});}
 
+window.toggleSidebar=function(){
+  const sb=document.getElementById('sidebar'),m=document.getElementById('main'),btn=document.getElementById('sidebar-toggle');
+  const collapsed=sb.classList.toggle('collapsed');
+  m.classList.toggle('expanded',collapsed);
+  btn.classList.toggle('shifted',!collapsed);
+  localStorage.setItem('cosmetologia_sidebar_collapsed',collapsed?'1':'0');
+};
+function applySidebarState(){
+  const sb=document.getElementById('sidebar'),m=document.getElementById('main'),btn=document.getElementById('sidebar-toggle');
+  const collapsed=localStorage.getItem('cosmetologia_sidebar_collapsed')==='1';
+  sb.classList.toggle('collapsed',collapsed);
+  m.classList.toggle('expanded',collapsed);
+  btn.classList.toggle('shifted',!collapsed);
+}
+const FIREBASE_CONFIG={apiKey:"AIzaSyD9wL8wD1rQjLnvHbXq-J9zVXCzU1piEuk",authDomain:"consultoriocosmetologia.firebaseapp.com",databaseURL:"https://consultoriocosmetologia-default-rtdb.firebaseio.com",projectId:"consultoriocosmetologia",storageBucket:"consultoriocosmetologia.firebasestorage.app",messagingSenderId:"579564378857",appId:"1:579564378857:web:4460b55efd799dde9bae78"};
+const APP_PASSWORD='Vicky2026';
+const AUTH_KEY='cosmetologia_auth_ok_v1';
+
+function tryAuthLogin(){
+  const input=document.getElementById('authPassInput');
+  const err=document.getElementById('authError');
+  if(input.value===APP_PASSWORD){
+    localStorage.setItem(AUTH_KEY,'1');
+    document.getElementById('authGate').style.display='none';
+    init();
+  } else {
+    err.style.display='block';
+    input.value='';
+    input.focus();
+  }
+}
+function checkAuthAndStart(){
+  applySidebarState();
+  if(localStorage.getItem(AUTH_KEY)==='1'){
+    document.getElementById('authGate').style.display='none';
+    init();
+  } else {
+    document.getElementById('authGate').style.display='flex';
+    setTimeout(()=>document.getElementById('authPassInput').focus(),100);
+  }
+}
 function init(){
-  const cfg=getStoredConfig();
-  if(!cfg){showSetup();return;}
   try{
-    app=initializeApp(cfg.firebase,'cosmetologia');
+    app=initializeApp(FIREBASE_CONFIG,'cosmetologia');
     db=getDatabase(app);
-    document.getElementById('clinic-name-display').textContent=cfg.clinicName||'Consultorio';
-    document.getElementById('settings-clinic-name').value=cfg.clinicName||'';
+    const cfg=getStoredConfig();
+    document.getElementById('clinic-name-display').textContent=(cfg&&cfg.clinicName)||'Consultorio';
+    document.getElementById('settings-clinic-name').value=(cfg&&cfg.clinicName)||'';
     listenData();showView('dashboard');
-  }catch(e){showSetup();}
+  }catch(e){toast('Error al conectar con la base de datos');}
 }
 function getStoredConfig(){const s=localStorage.getItem('cosmetologia_config');return s?JSON.parse(s):null;}
-function showSetup(){
-  document.getElementById('sidebar').style.display='none';
-  document.getElementById('main').style.marginLeft='0';
-  document.querySelector('header').style.display='none';
-  document.getElementById('view-setup').classList.add('active');
-}
-window.saveConfig=function(){
-  const cfg={firebase:{apiKey:v('cfg-apiKey'),authDomain:v('cfg-authDomain'),databaseURL:v('cfg-databaseURL'),projectId:v('cfg-projectId'),storageBucket:v('cfg-storageBucket'),messagingSenderId:v('cfg-messagingSenderId'),appId:v('cfg-appId')},clinicName:v('cfg-clinicName')};
-  if(!cfg.firebase.apiKey||!cfg.firebase.databaseURL){toast('Completa al menos API Key y Database URL');return;}
-  localStorage.setItem('cosmetologia_config',JSON.stringify(cfg));location.reload();
-};
 function listenData(){
   onValue(ref(db,'clients'),s=>{allClients=s.val()||{};refreshAll();});
   onValue(ref(db,'sessions'),s=>{allSessions=s.val()||{};refreshAll();});
@@ -918,12 +946,11 @@ function renderWeek(){
 }
 window.saveClinicName=function(){
   const name=document.getElementById('settings-clinic-name').value.trim();
-  const cfg=getStoredConfig();cfg.clinicName=name;
+  const cfg=getStoredConfig()||{};cfg.clinicName=name;
   localStorage.setItem('cosmetologia_config',JSON.stringify(cfg));
   document.getElementById('clinic-name-display').textContent=name||'Consultorio';
   toast('Nombre guardado');
 };
-window.resetConfig=function(){if(confirm('Cambiar configuracion Firebase?')){localStorage.removeItem('cosmetologia_config');location.reload();}};
 window.exportData=function(){
   const data={clients:allClients,sessions:allSessions,appointments:allAppts};
   const a=document.createElement('a');
@@ -938,7 +965,7 @@ function fmtDate(d){return d.toLocaleDateString('es-AR',{day:'numeric',month:'sh
 function toLocalISO(d){return d.toISOString().slice(0,10);}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');}));
-init();
+checkAuthAndStart();
 </script>
 </body>
 </html>
